@@ -7,6 +7,13 @@ export interface LoginParams {
 }
 
 /**
+ * @description: 获取验证码
+ */
+export interface GetCaptchaByKeyParams {
+  key: string;
+}
+
+/**
  * @description: Get user information
  */
 export interface GetUserInfoByUserIdParams {

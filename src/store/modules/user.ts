@@ -2,6 +2,7 @@ import type {
   LoginParams,
   GetUserInfoByUserIdModel,
   GetUserInfoByUserIdParams,
+  GetCaptchaByKeyParams,
 } from '/@/api/sys/model/userModel';
 
 import store from '/@/store/index';
@@ -16,7 +17,7 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 import router from '/@/router';
 
-import { loginApi, getUserInfoById } from '/@/api/sys/user';
+import { loginApi, getUserInfoById, loadCaptcha } from '/@/api/sys/user';
 
 import { setLocal, getLocal, getSession, setSession } from '/@/utils/helper/persistent';
 import { useProjectSetting } from '/@/hooks/setting';
@@ -119,6 +120,33 @@ class User extends VuexModule {
       return userInfo;
     } catch (error) {
       return null;
+    }
+  }
+
+  /**
+   * @description: 加载验证码
+   */
+  @Action
+  async loadCaptcha({ key }: GetCaptchaByKeyParams): Promise<string | ''> {
+    try {
+      const res = await loadCaptcha(key).catch((e) => {
+        const { createMessage } = useMessage();
+        if (e.toString().indexOf('429') !== -1) {
+          createMessage.error('获取验证码过于频繁，请1分钟后再试');
+        } else {
+          createMessage.error('加载验证码失败');
+        }
+      });
+      if (res.byteLength <= 100) {
+        console.log('系统维护中，请稍微再试~');
+        return '';
+      }
+      return (
+        'data:image/png;base64,' +
+        btoa(new Uint8Array(res).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+      );
+    } catch (error) {
+      return '';
     }
   }
 

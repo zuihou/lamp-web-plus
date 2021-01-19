@@ -21,8 +21,11 @@ export interface RequestOptions {
 }
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
+  // 接口可能会有通用的地址部分，可以统一抽取出来
   prefixUrl?: string;
+  // 数据处理方式
   transform?: AxiosTransform;
+  // 配置项，下面的选项都可以在独立的接口请求中覆盖
   requestOptions?: RequestOptions;
 }
 

@@ -2,6 +2,10 @@ export default {
   loginButton: '登录',
   autoLogin: '自动登录',
   forgetPassword: '忘记密码',
+  tenant: '企业编码',
+  username: '账号',
+  password: '密码',
+  captcha: '验证码',
 
   // notify
   loginSuccessTitle: '登录成功',

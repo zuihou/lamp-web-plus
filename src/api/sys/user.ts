@@ -11,6 +11,7 @@ enum Api {
   Login = '/login',
   GetUserInfoById = '/getUserInfoById',
   GetPermCodeByUserId = '/getPermCodeByUserId',
+  LoadCaptcha = '/oauth/anno/captcha',
 }
 
 /**
@@ -38,6 +39,21 @@ export function getUserInfoById(params: GetUserInfoByUserIdParams) {
     method: 'GET',
     params,
   });
+}
+
+/**
+ * @description: 加载验证码
+ */
+export function loadCaptcha(key: String) {
+  return defHttp.request(
+    {
+      url: Api.LoadCaptcha,
+      method: 'GET',
+      responseType: 'arraybuffer',
+      params: { key: key },
+    },
+    { isTransformRequestResult: false }
+  );
 }
 
 export function getPermCodeByUserId(params: GetUserInfoByUserIdParams) {

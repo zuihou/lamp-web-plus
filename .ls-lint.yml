@@ -1,5 +1,10 @@
 ls:
   src/*:
+    # PascalCase = 首字母大写&驼峰
+    # kebab-case = 短横线
+    # camelCase = 骆驼式命令法
+    # SnakeCase = 下划线
+    # regex:^index = index 结尾
     .js: kebab-case | PascalCase
     .vue: PascalCase | regex:^index
     .ts: camelCase | PascalCase
