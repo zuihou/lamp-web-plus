@@ -1,4 +1,3 @@
-
 # 介绍
 
 项目基于`vben-admin-thin-next`实现的 vue3 风格的后台管理系统，
@@ -9,7 +8,6 @@
 
 - `Node.js`: - 版本最好大于 `12.0.0`
 - `yarn` > `npm` > `cnpm`: - 包管理工具.
-
 
 ## 修改清单
 
@@ -52,7 +50,9 @@ yarn add xlsx
 ```bash
 yarn config set registry https://registry.npm.taobao.org
 
-npmyarn install
+yarn install
+
+npm install --registry=https://registry.npm.taobao.org
 
 yarn serve
 ```

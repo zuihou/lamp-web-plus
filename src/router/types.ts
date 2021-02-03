@@ -79,6 +79,8 @@ export interface Menu {
   meta?: Partial<RouteMeta>;
   // 菜单标签设置
   tag?: MenuTag;
+
+  hideMenu?: boolean;
 }
 
 export interface MenuModule {

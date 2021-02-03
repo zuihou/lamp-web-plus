@@ -6,7 +6,7 @@ function createFakeUserList() {
     {
       userId: '1',
       username: 'vben',
-      realName: 'lamp web plus',
+      realName: 'Vben Admin',
       desc: 'manager',
       password: '123456',
       token: 'fakeToken1',
@@ -39,7 +39,7 @@ export default [
   // mock user login
   {
     url: '/api/login',
-    timeout: 1000,
+    timeout: 200,
     method: 'post',
     response: ({ body }) => {
       const { username, password } = body;
@@ -62,7 +62,6 @@ export default [
   },
   {
     url: '/api/getUserInfoById',
-    timeout: 200,
     method: 'get',
     response: ({ query }) => {
       const { userId } = query;

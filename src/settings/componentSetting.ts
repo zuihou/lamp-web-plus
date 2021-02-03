@@ -1,4 +1,4 @@
-// 用于配置某些组件的常规配置，而无需修改组件
+// Used to configure the general configuration of some components without modifying the components
 
 import type { SorterResult } from '../components/Table';
 

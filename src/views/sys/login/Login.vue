@@ -10,7 +10,7 @@
             <h1>{{ title }}</h1>
           </header>
 
-          <a-form class="mx-auto mt-10" :model="formData" :rules="formRules" ref="formRef">
+          <a-form class="login-form__main" :model="formData" :rules="formRules" ref="formRef">
             <a-form-item name="tenant">
               <a-input
                 size="large"
@@ -89,7 +89,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, reactive, ref, unref, toRaw, onMounted } from 'vue';
-  import { Checkbox } from 'ant-design-vue';
+  import { Checkbox, Form, Input, Row, Col } from 'ant-design-vue';
 
   import { Button } from '/@/components/Button';
   import { AppLocalePicker } from '/@/components/Application';
@@ -104,9 +104,15 @@
 
   export default defineComponent({
     components: {
+      [Checkbox.name]: Checkbox,
+      [Form.name]: Form,
+      [Form.Item.name]: Form.Item,
+      [Input.name]: Input,
+      [Input.Password.name]: Input.Password,
       AButton: Button,
-      ACheckbox: Checkbox,
       AppLocalePicker,
+      [Row.name]: Row,
+      [Col.name]: Col,
     },
     setup() {
       const formRef = ref<any>(null);
@@ -178,7 +184,6 @@
           }
         } catch (error) {
         } finally {
-          // resetVerify();
           formState.loading = false;
         }
       }
@@ -219,7 +224,7 @@
       background-position: 30% 30%;
       background-size: 80% 80%;
 
-      .respond-to(xlarge, {display: block;});
+      .respond-to(xlarge, { display: block;});
     }
 
     &-form {
@@ -231,7 +236,11 @@
       border-width: 8px;
       border-radius: 4px;
       background-clip: padding-box;
-      .respond-to(xlarge, {margin: 0 120px 0 50px});
+      .respond-to(xlarge, { margin: 0 120px 0 50px});
+
+      &__main {
+        margin: 30px auto 0 auto !important;
+      }
 
       &-wrap {
         position: absolute;
@@ -243,7 +252,9 @@
         // height: 90%;
         justify-content: center;
         align-items: center;
-        .respond-to(xlarge, {justify-content: flex-end;});
+        .respond-to(xlarge, {
+        justify-content: flex-end;
+          });
       }
 
       &__content {
