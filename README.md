@@ -48,11 +48,8 @@ yarn add xlsx
 ## 开发环境
 
 ```bash
-yarn config set registry https://registry.npm.taobao.org
-
+## 不能指定淘宝源！
 yarn install
-
-npm install --registry=https://registry.npm.taobao.org
 
 yarn serve
 ```
