@@ -39,6 +39,8 @@
 
   import { errorStore, ErrorInfo } from '/@/store/modules/error';
 
+  import { fireErrorApi } from '/@/api/demo/error';
+
   import { getColumns } from './data';
 
   import { cloneDeep } from 'lodash-es';
@@ -95,7 +97,7 @@
       }
 
       async function fireAjaxError() {
-        // await fireErrorApi();
+        await fireErrorApi();
       }
 
       return {

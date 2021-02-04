@@ -2,19 +2,19 @@ import type { Plugin } from 'vite';
 
 import PurgeIcons from 'vite-plugin-purge-icons';
 
-import visualizer from 'rollup-plugin-visualizer';
-
 // @ts-ignore
 import pkg from '../../../package.json';
-import { ViteEnv, isReportMode } from '../../utils';
+import { ViteEnv } from '../../utils';
 import { configHtmlPlugin } from './html';
 import { configPwaConfig } from './pwa';
 import { configMockPlugin } from './mock';
 import { configGzipPlugin } from './gzip';
-import { configStyleImportConfig } from './style-import';
+import { configStyleImportPlugin } from './styleImport';
+import { configVisualizerConfig } from './visualizer';
+import { configThemePlugin } from './theme';
 
 // gen vite plugins
-export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean, mode: string) {
+export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const vitePlugins: (Plugin | Plugin[])[] = [];
 
   // vite-plugin-html
@@ -30,15 +30,16 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean, mode: stri
   vitePlugins.push(PurgeIcons());
 
   // vite-plugin-style-import
-  vitePlugins.push(configStyleImportConfig());
+  vitePlugins.push(configStyleImportPlugin());
 
   // rollup-plugin-gzip
   vitePlugins.push(configGzipPlugin(isBuild));
 
   // rollup-plugin-visualizer
-  if (isReportMode()) {
-    vitePlugins.push(visualizer({ filename: './build/.cache/stats.html', open: true }) as Plugin);
-  }
+  vitePlugins.push(configVisualizerConfig());
+
+  //vite-plugin-theme
+  vitePlugins.push(configThemePlugin());
 
   return vitePlugins;
 }

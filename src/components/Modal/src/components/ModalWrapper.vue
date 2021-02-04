@@ -1,7 +1,7 @@
 <template>
   <ScrollContainer ref="wrapperRef">
     <div ref="spinRef" :style="spinStyle" v-loading="loading" :loading-tip="loadingTip">
-      <slot />
+      <slot></slot>
     </div>
   </ScrollContainer>
 </template>
@@ -20,7 +20,6 @@
     nextTick,
     onUnmounted,
   } from 'vue';
-  import { Spin } from 'ant-design-vue';
 
   import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
   import { ScrollContainer } from '/@/components/Container';
@@ -31,13 +30,13 @@
 
   export default defineComponent({
     name: 'ModalWrapper',
+    components: { ScrollContainer },
     inheritAttrs: false,
-    components: { Spin, ScrollContainer },
     props: {
       loading: propTypes.bool,
       useWrapper: propTypes.bool.def(true),
-      modalHeaderHeight: propTypes.number.def(50),
-      modalFooterHeight: propTypes.number.def(54),
+      modalHeaderHeight: propTypes.number.def(57),
+      modalFooterHeight: propTypes.number.def(74),
       minHeight: propTypes.number.def(200),
       height: propTypes.number,
       footerOffset: propTypes.number.def(0),
@@ -137,7 +136,7 @@
 
           if (props.fullScreen) {
             realHeightRef.value =
-              window.innerHeight - props.modalFooterHeight - props.modalHeaderHeight;
+              window.innerHeight - props.modalFooterHeight - props.modalHeaderHeight - 28;
           } else {
             realHeightRef.value = props.height
               ? props.height

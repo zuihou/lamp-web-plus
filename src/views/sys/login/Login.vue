@@ -1,10 +1,10 @@
 <template>
   <div class="login">
-    <div class="login-mask" />
+    <div class="login-mask"></div>
     <div class="login-form-wrap">
-      <div class="login-form mx-6">
+      <div class="mx-6 login-form">
         <AppLocalePicker v-if="showLocale" class="login-form__locale" />
-        <div class="login-form__content px-2 py-10">
+        <div class="px-2 py-10 login-form__content">
           <header>
             <img :src="logo" class="mr-4" />
             <h1>{{ title }}</h1>
@@ -136,8 +136,8 @@
       });
 
       const formState = reactive({
-        key: randomNum(24, 16),
         loading: false,
+        key: randomNum(24, 16),
         captchaSrc: '',
       });
 

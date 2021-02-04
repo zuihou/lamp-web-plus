@@ -3,7 +3,7 @@
     v-bind="getBindValues"
     @select="handleSelect"
     :activeName="activeName"
-    :openNames="openNames"
+    :openNames="getOpenKeys"
     :class="prefixCls"
     :activeSubMenuNames="activeSubMenuNames"
   >
@@ -36,11 +36,11 @@
   import { useOpenKeys } from './useOpenKeys';
   export default defineComponent({
     name: 'SimpleMenu',
-    inheritAttrs: false,
     components: {
       Menu,
       SimpleSubMenu,
     },
+    inheritAttrs: false,
     props: {
       items: {
         type: Array as PropType<MenuType[]>,
@@ -55,6 +55,7 @@
         type: Function as PropType<(key: string) => Promise<boolean>>,
       },
     },
+    emits: ['menuClick'],
     setup(props, { attrs, emit }) {
       const currentActiveMenu = ref('');
       const isClickGo = ref(false);
@@ -67,8 +68,14 @@
 
       const { currentRoute } = useRouter();
       const { prefixCls } = useDesign('simple-menu');
-      const { items, accordion, mixSider } = toRefs(props);
-      const { setOpenKeys } = useOpenKeys(menuState, items, accordion, mixSider);
+      const { items, accordion, mixSider, collapse } = toRefs(props);
+      const { setOpenKeys, getOpenKeys } = useOpenKeys(
+        menuState,
+        items,
+        accordion,
+        mixSider,
+        collapse
+      );
 
       const getBindValues = computed(() => ({ ...attrs, ...props }));
 
@@ -125,6 +132,7 @@
         prefixCls,
         getBindValues,
         handleSelect,
+        getOpenKeys,
         ...toRefs(menuState),
       };
     },
