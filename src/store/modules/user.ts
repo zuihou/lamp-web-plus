@@ -4,6 +4,7 @@ import type {
   GetUserInfoByUserIdParams,
   GetCaptchaByKeyParams,
 } from '/@/api/sys/model/userModel';
+import { Base64 } from 'js-base64';
 
 import store from '/@/store/index';
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
@@ -11,7 +12,7 @@ import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
 
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
-import { CacheTypeEnum, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import { CacheTypeEnum, ROLES_KEY, TOKEN_KEY, TENANT_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 
@@ -52,6 +53,8 @@ class User extends VuexModule {
   // token
   private tokenState = '';
 
+  private tenantState = '';
+
   // roleList
   private roleListState: RoleEnum[] = [];
 
@@ -63,6 +66,10 @@ class User extends VuexModule {
     return this.tokenState || getCache<string>(TOKEN_KEY);
   }
 
+  get getTenantState(): string {
+    return this.tenantState || getCache<string>(TENANT_KEY);
+  }
+
   get getRoleListState(): RoleEnum[] {
     return this.roleListState.length > 0 ? this.roleListState : getCache<RoleEnum[]>(ROLES_KEY);
   }
@@ -71,6 +78,7 @@ class User extends VuexModule {
   commitResetState(): void {
     this.userInfoState = null;
     this.tokenState = '';
+    this.tenantState = '';
     this.roleListState = [];
   }
 
@@ -92,6 +100,12 @@ class User extends VuexModule {
     setCache(TOKEN_KEY, info);
   }
 
+  @Mutation
+  commitTanantState(info: string): void {
+    this.tenantState = info;
+    setCache(TENANT_KEY, info);
+  }
+
   /**
    * @description: login
    */
@@ -104,6 +118,9 @@ class User extends VuexModule {
   ): Promise<GetUserInfoByUserIdModel | null> {
     try {
       const { goHome = true, mode, ...loginParams } = params;
+      debugger;
+      loginParams.tenant = `${Base64.encode(loginParams.tenantView)}`;
+      this.commitTanantState(loginParams.tenant);
       const data = await loginApi(loginParams, mode);
 
       const { token, userId } = data;

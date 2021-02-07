@@ -65,6 +65,7 @@ export class VAxios {
    * @description: 拦截器配置
    */
   private setupInterceptors() {
+    debugger;
     const transform = this.getTransform();
     if (!transform) {
       return;
@@ -80,7 +81,8 @@ export class VAxios {
 
     // 请求拦截器配置处理
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-      // If cancel repeat request is turned on, then cancel repeat request is prohibited
+      debugger;
+      // 如果启用了“取消重复请求”，则禁止取消重复请求
       const { headers: { ignoreCancelToken } = { ignoreCancelToken: false } } = config;
       !ignoreCancelToken && axiosCanceler.addPending(config);
       if (requestInterceptors && isFunction(requestInterceptors)) {
@@ -96,6 +98,7 @@ export class VAxios {
 
     // 响应结果拦截器处理
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
+      debugger;
       res && axiosCanceler.removePending(res.config);
       if (responseInterceptors && isFunction(responseInterceptors)) {
         res = responseInterceptors(res);
@@ -162,6 +165,8 @@ export class VAxios {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
+          console.log(res);
+          debugger;
           if (transformRequestData && isFunction(transformRequestData)) {
             const ret = transformRequestData(res, opt);
             ret !== errorResult ? resolve(ret) : reject(new Error('request error!'));
@@ -170,6 +175,8 @@ export class VAxios {
           resolve((res as unknown) as Promise<T>);
         })
         .catch((e: Error) => {
+          console.log(e);
+          debugger;
           if (requestCatch && isFunction(requestCatch)) {
             reject(requestCatch(e));
             return;

@@ -57,6 +57,7 @@ class Error extends VuexModule implements ErrorState {
 
   @Action
   setupErrorHandle(error: any) {
+    debugger;
     const { useErrorHandle } = useProjectSetting();
     if (!useErrorHandle) return;
 

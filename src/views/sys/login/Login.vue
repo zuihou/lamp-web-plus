@@ -11,10 +11,13 @@
           </header>
 
           <a-form class="login-form__main" :model="formData" :rules="formRules" ref="formRef">
-            <a-form-item name="tenant">
+            <a-form-item name="grantType">
+              <a-input size="large" v-model:value="formData.grantType" :hidden="true" />
+            </a-form-item>
+            <a-form-item name="tenantView">
               <a-input
                 size="large"
-                v-model:value="formData.tenant"
+                v-model:value="formData.tenantView"
                 placeholder="t('sys.login.tenant')"
               />
             </a-form-item>
@@ -55,14 +58,7 @@
               </a-col>
             </a-row>
             <a-row>
-              <a-col :span="12">
-                <a-form-item>
-                  <!-- No logic, you need to deal with it yourself -->
-                  <a-checkbox v-model:checked="autoLogin" size="small">{{
-                    t('sys.login.autoLogin')
-                  }}</a-checkbox>
-                </a-form-item>
-              </a-col>
+              <a-col :span="12"> </a-col>
               <a-col :span="12">
                 <a-form-item :style="{ 'text-align': 'right' }">
                   <!-- No logic, you need to deal with it yourself -->
@@ -128,10 +124,12 @@
       });
 
       const formData = reactive({
-        tenant: '0000',
+        tenant: '',
+        tenantView: '0000',
         account: 'lamp',
         password: 'lamp',
         code: '',
+        grantType: 'captcha',
         verify: undefined,
       });
 
@@ -148,7 +146,7 @@
       }
 
       const formRules = reactive({
-        // tenant: [{}],  // 非 NONE 模式必填
+        // tenantView: [{}],  // 非 NONE 模式必填
         account: [{ required: true, message: t('sys.login.accountPlaceholder'), trigger: 'blur' }],
         password: [
           { required: true, message: t('sys.login.passwordPlaceholder'), trigger: 'blur' },
@@ -175,6 +173,7 @@
         try {
           const data = await form.validate();
           const userInfo = await userStore.login(toRaw(data));
+          debugger;
           if (userInfo) {
             notification.success({
               message: t('sys.login.loginSuccessTitle'),

@@ -7,3 +7,10 @@ import { userStore } from '/@/store/modules/user';
 export function getToken(): string {
   return userStore.getTokenState;
 }
+/**
+ * @description:  Get tenant
+ * @return tenant
+ */
+export function getTenant(): string {
+  return userStore.getTenantState;
+}

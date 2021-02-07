@@ -29,6 +29,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   const isBuild = command === 'build';
 
   return {
+    // 在生产中服务时的基本公共路径
     base: VITE_PUBLIC_PATH,
     root,
     alias: [
@@ -37,6 +38,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         replacement: pathResolve('src') + '/',
       },
     ],
+    // 代理
     server: {
       port: VITE_PORT,
       proxy: createProxy(VITE_PROXY),
@@ -81,6 +83,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       ...createVitePlugins(viteEnv, isBuild),
     ],
 
+    // 引入第三方的配置
     optimizeDeps: {
       include: ['@iconify/iconify'],
     },

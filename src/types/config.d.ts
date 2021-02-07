@@ -144,6 +144,9 @@ export interface GlobConfig {
   uploadUrl?: string;
   urlPrefix?: string;
   shortName: string;
+  tenantType?: string;
+  clientId?: string;
+  clientSecret?: string;
 }
 export interface GlobEnvConfig {
   // 网站标题
@@ -153,6 +156,9 @@ export interface GlobEnvConfig {
   VITE_GLOB_API_URL_PREFIX?: string;
   VITE_GLOB_APP_SHORT_NAME: string;
   VITE_GLOB_UPLOAD_URL?: string;
+  VITE_GLOB_TENANT_TYPE?: string;
+  VITE_GLOB_CLIENT_ID?: string;
+  VITE_GLOB_CLIENT_SECRET?: string;
 }
 
 interface GlobWrap {

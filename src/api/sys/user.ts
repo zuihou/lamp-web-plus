@@ -8,9 +8,9 @@ import {
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 
 enum Api {
-  Login = '/login',
   GetUserInfoById = '/getUserInfoById',
   GetPermCodeByUserId = '/getPermCodeByUserId',
+  Login = '/oauth/noToken/login2',
   LoadCaptcha = '/oauth/anno/captcha',
 }
 
@@ -23,6 +23,11 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
       url: Api.Login,
       method: 'POST',
       params,
+      headers: {
+        tenant: params.tenant,
+        'x-is-tenant': false,
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
     },
     {
       errorMessageMode: mode,

@@ -4,7 +4,7 @@
 import type { AxiosResponse } from 'axios';
 import type { CreateAxiosOptions, RequestOptions, Result } from './types';
 import { VAxios } from './Axios';
-import { getToken } from '/@/utils/auth';
+import { getToken, getTenant } from '/@/utils/auth';
 import { AxiosTransform } from './axiosTransform';
 
 import { checkStatus } from './checkStatus';
@@ -20,6 +20,7 @@ import { errorStore } from '/@/store/modules/error';
 import { errorResult } from './const';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { createNow, formatRequestDate } from './helper';
+import { Base64 } from 'js-base64';
 
 const globSetting = useGlobSetting();
 const prefix = globSetting.urlPrefix;
@@ -30,9 +31,12 @@ const { createMessage, createErrorModal } = useMessage();
  */
 const transform: AxiosTransform = {
   /**
+   * 如果需要转换请求(isTransformRequestResult)结果,
+   * 则对返回值进行转换
    * @description: 处理请求数据
    */
   transformRequestData: (res: AxiosResponse<Result>, options: RequestOptions) => {
+    debugger;
     const { t } = useI18n();
     const { isTransformRequestResult } = options;
     // 不进行任何处理，直接返回
@@ -40,8 +44,8 @@ const transform: AxiosTransform = {
     if (!isTransformRequestResult) {
       return res.data;
     }
-    // 错误的时候返回
 
+    // 错误的时候返回
     const { data } = res;
     if (!data) {
       // return '[HTTP] Request has no return value';
@@ -94,8 +98,14 @@ const transform: AxiosTransform = {
     return errorResult;
   },
 
-  // 请求之前处理config
+  /**
+   * 请求之前处理config
+   * @param config 配置
+   * @param options 操作
+   */
   beforeRequestHook: (config, options) => {
+    debugger;
+    // 全局api前缀， 局部url前缀， 是否将参数拼接到url中， 是否格式化日期， 是否在url后面拼接时间戳
     const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true } = options;
 
     if (joinPrefix) {
@@ -118,8 +128,8 @@ const transform: AxiosTransform = {
     } else {
       if (!isString(params)) {
         formatDate && formatRequestDate(params);
-        config.data = params;
-        config.params = undefined;
+        // config.data = params;
+        config.params = params;
         if (joinParamsToUrl) {
           config.url = setObjToUrlParams(config.url as string, config.data);
         }
@@ -133,15 +143,31 @@ const transform: AxiosTransform = {
   },
 
   /**
+   * 请求之前处理参数的拦截器
    * @description: 请求拦截器处理
    */
   requestInterceptors: (config) => {
-    // 请求之前处理config
+    debugger;
+    const tokenName = 'token';
+    const { tenantType, clientId, clientSecret } = globSetting;
+
+    // 增加token
+    const isToken = config.headers['x-is-token'] === false ? config.headers['x-is-token'] : true;
+
     const token = getToken();
-    if (token) {
-      // jwt token
-      config.headers.Authorization = token;
+    if (isToken && token) {
+      config.headers[tokenName] = 'Bearer ' + token;
     }
+
+    // 增加租户编码
+    const isTenant = config.headers['x-is-tenant'] === false ? config.headers['x-is-tenant'] : true;
+    if (isTenant && tenantType !== 'NONE') {
+      config.headers.tenant = getTenant();
+    }
+
+    // 添加客户端信息
+    config.headers['Authorization'] = `Basic ${Base64.encode(`${clientId}:${clientSecret}`)}`;
+
     return config;
   },
 
@@ -149,6 +175,7 @@ const transform: AxiosTransform = {
    * @description: 响应错误处理
    */
   responseInterceptorsCatch: (error: any) => {
+    debugger;
     const { t } = useI18n();
     errorStore.setupErrorHandle(error);
     const { response, code, message } = error || {};
@@ -176,7 +203,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new VAxios(
     deepMerge(
       {
-        timeout: 10 * 1000,
+        timeout: 30 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
         // 接口可能会有通用的地址部分，可以统一抽取出来

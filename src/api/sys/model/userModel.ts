@@ -2,8 +2,14 @@
  * @description: Login interface parameters
  */
 export interface LoginParams {
-  username: string;
+  account: string;
   password: string;
+  tenantView: string;
+  tenant: string;
+  code: string;
+  key: string;
+  grantType: string;
+  refreshToken: string;
 }
 
 /**
