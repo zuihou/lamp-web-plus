@@ -1,4 +1,5 @@
 import { generate } from '@ant-design/colors';
+
 export const primaryColor = '#0084f4';
 
 export const themeMode = 'light';
@@ -36,22 +37,22 @@ export function generateColors({
   mixDarken,
   tinycolor,
 }: GenerateColorsParams) {
-  const lightens = new Array(19).fill(0).map((t, i) => {
+  const arr = new Array(19).fill(0);
+  const lightens = arr.map((t, i) => {
     return mixLighten(color, i / 5);
   });
 
-  const darkens = new Array(19).fill(0).map((t, i) => {
+  const darkens = arr.map((t, i) => {
     return mixDarken(color, i / 5);
   });
 
-  const alphaColors = new Array(19).fill(0).map((t, i) => {
+  const alphaColors = arr.map((t, i) => {
     return tinycolor(color)
       .setAlpha(i / 20)
       .toRgbString();
   });
 
-  const tinycolorLightens = new Array(19)
-    .fill(0)
+  const tinycolorLightens = arr
     .map((t, i) => {
       return tinycolor(color)
         .lighten(i * 5)
@@ -59,8 +60,7 @@ export function generateColors({
     })
     .filter((item) => item !== '#ffffff');
 
-  const tinycolorDarkens = new Array(19)
-    .fill(0)
+  const tinycolorDarkens = arr
     .map((t, i) => {
       return tinycolor(color)
         .darken(i * 5)
