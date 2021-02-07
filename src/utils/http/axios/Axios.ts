@@ -65,7 +65,6 @@ export class VAxios {
    * @description: 拦截器配置
    */
   private setupInterceptors() {
-    debugger;
     const transform = this.getTransform();
     if (!transform) {
       return;
@@ -81,7 +80,6 @@ export class VAxios {
 
     // 请求拦截器配置处理
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-      debugger;
       // 如果启用了“取消重复请求”，则禁止取消重复请求
       const { headers: { ignoreCancelToken } = { ignoreCancelToken: false } } = config;
       !ignoreCancelToken && axiosCanceler.addPending(config);
@@ -98,7 +96,6 @@ export class VAxios {
 
     // 响应结果拦截器处理
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
-      debugger;
       res && axiosCanceler.removePending(res.config);
       if (responseInterceptors && isFunction(responseInterceptors)) {
         res = responseInterceptors(res);
@@ -161,6 +158,7 @@ export class VAxios {
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt);
     }
+    debugger;
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)

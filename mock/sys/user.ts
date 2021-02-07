@@ -42,7 +42,6 @@ export default [
   //   timeout: 200,
   //   method: 'post',
   //   response: ({ body }) => {
-  //     debugger;
   //     const { username, password } = body;
   //     const checkUser = createFakeUserList().find(
   //       (item) => item.username === username && password === item.password

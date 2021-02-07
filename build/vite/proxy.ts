@@ -14,7 +14,6 @@ const httpsRE = /^https:\/\//;
  */
 export function createProxy(list: ProxyList = []) {
   const ret: ProxyTargetList = {};
-  debugger;
   for (const [prefix, target] of list) {
     const isHttps = httpsRE.test(target);
 
@@ -24,14 +23,12 @@ export function createProxy(list: ProxyList = []) {
       changeOrigin: true,
       ws: true,
       rewrite: (path) => {
-        console.log('path===');
-        console.log(path);
+        console.log(`path===${path}`);
         return path.replace(new RegExp(`^${prefix}`), `${prefix}`);
       },
       // https is require secure=false
       ...(isHttps ? { secure: false } : {}),
     };
   }
-  debugger;
   return ret;
 }

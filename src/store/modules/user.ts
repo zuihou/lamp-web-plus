@@ -122,7 +122,7 @@ class User extends VuexModule {
       loginParams.tenant = `${Base64.encode(loginParams.tenantView)}`;
       this.commitTanantState(loginParams.tenant);
       const data = await loginApi(loginParams, mode);
-
+      debugger;
       const { token, userId } = data;
 
       // save token

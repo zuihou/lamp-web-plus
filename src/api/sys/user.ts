@@ -10,7 +10,7 @@ import { ErrorMessageMode } from '/@/utils/http/axios/types';
 enum Api {
   GetUserInfoById = '/getUserInfoById',
   GetPermCodeByUserId = '/getPermCodeByUserId',
-  Login = '/oauth/noToken/login2',
+  Login = '/oauth/noToken/login',
   LoadCaptcha = '/oauth/anno/captcha',
 }
 
@@ -26,7 +26,7 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
       headers: {
         tenant: params.tenant,
         'x-is-tenant': false,
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        // 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
     },
     {

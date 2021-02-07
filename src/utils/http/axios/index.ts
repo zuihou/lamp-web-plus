@@ -128,8 +128,8 @@ const transform: AxiosTransform = {
     } else {
       if (!isString(params)) {
         formatDate && formatRequestDate(params);
-        // config.data = params;
-        config.params = params;
+        config.data = params;
+        config.params = undefined;
         if (joinParamsToUrl) {
           config.url = setObjToUrlParams(config.url as string, config.data);
         }

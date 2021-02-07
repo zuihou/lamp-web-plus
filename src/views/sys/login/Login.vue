@@ -14,6 +14,9 @@
             <a-form-item name="grantType">
               <a-input size="large" v-model:value="formData.grantType" :hidden="true" />
             </a-form-item>
+            <a-form-item name="key">
+              <a-input size="large" v-model:value="formData.key" :hidden="true" />
+            </a-form-item>
             <a-form-item name="tenantView">
               <a-input
                 size="large"
@@ -130,18 +133,18 @@
         password: 'lamp',
         code: '',
         grantType: 'captcha',
+        key: randomNum(24, 16),
         verify: undefined,
       });
 
       const formState = reactive({
         loading: false,
-        key: randomNum(24, 16),
         captchaSrc: '',
       });
 
       // 加载验证码
       async function loadCaptcha() {
-        const captcha = await userStore.loadCaptcha({ key: formState.key });
+        const captcha = await userStore.loadCaptcha({ key: formData.key });
         formState.captchaSrc = captcha;
       }
 
@@ -167,7 +170,6 @@
 
       async function handleLogin() {
         const form = unref(formRef);
-        debugger;
         if (!form) return;
         formState.loading = true;
         try {
