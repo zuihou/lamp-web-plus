@@ -296,6 +296,8 @@
           display: inline-block;
           vertical-align: top;
           cursor: pointer;
+          height: 42px;
+          width: 115px;
         }
       }
     }
