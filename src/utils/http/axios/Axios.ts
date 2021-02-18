@@ -6,14 +6,13 @@ import { isFunction } from '/@/utils/is';
 import { cloneDeep } from 'lodash-es';
 
 import type { RequestOptions, CreateAxiosOptions, Result, UploadFileParams } from './types';
-// import { ContentTypeEnum } from '/@/enums/httpEnum';
 import { errorResult } from './const';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
 
 export * from './axiosTransform';
 
 /**
- * @description:  axios模块
+ * @description:  axios module
  */
 export class VAxios {
   private axiosInstance: AxiosInstance;
@@ -26,7 +25,7 @@ export class VAxios {
   }
 
   /**
-   * @description:  创建axios实例
+   * @description:  Create axios instance
    */
   private createAxios(config: CreateAxiosOptions): void {
     this.axiosInstance = axios.create(config);
@@ -42,7 +41,7 @@ export class VAxios {
   }
 
   /**
-   * @description: 重新配置axios
+   * @description: Reconfigure axios
    */
   configAxios(config: CreateAxiosOptions) {
     if (!this.axiosInstance) {
@@ -52,7 +51,7 @@ export class VAxios {
   }
 
   /**
-   * @description: 设置通用header
+   * @description: Set general header
    */
   setHeader(headers: any): void {
     if (!this.axiosInstance) {
@@ -62,7 +61,7 @@ export class VAxios {
   }
 
   /**
-   * @description: 拦截器配置
+   * @description: Interceptor configuration
    */
   private setupInterceptors() {
     const transform = this.getTransform();
@@ -78,10 +77,12 @@ export class VAxios {
 
     const axiosCanceler = new AxiosCanceler();
 
-    // 请求拦截器配置处理
+    // Request interceptor configuration processing
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-      // 如果启用了“取消重复请求”，则禁止取消重复请求
-      const { headers: { ignoreCancelToken } = { ignoreCancelToken: false } } = config;
+      // If cancel repeat request is turned on, then cancel repeat request is prohibited
+      const {
+        headers: { ignoreCancelToken = false },
+      } = config;
       !ignoreCancelToken && axiosCanceler.addPending(config);
       if (requestInterceptors && isFunction(requestInterceptors)) {
         config = requestInterceptors(config);

@@ -8,10 +8,11 @@
   import type { PropType } from 'vue';
 
   import { defineComponent } from 'vue';
-
   import BasicHelp from './BasicHelp.vue';
-  import { propTypes } from '/@/utils/propTypes';
+
   import { useDesign } from '/@/hooks/web/useDesign';
+
+  import { propTypes } from '/@/utils/propTypes';
 
   export default defineComponent({
     name: 'BasicTitle',
@@ -40,8 +41,8 @@
     font-weight: 700;
     line-height: 24px;
     color: @text-color-base;
-
-    .unselect();
+    cursor: pointer;
+    user-select: none;
 
     &.show-span::before {
       position: absolute;

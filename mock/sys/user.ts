@@ -10,10 +10,12 @@ function createFakeUserList() {
       desc: 'manager',
       password: '123456',
       token: 'fakeToken1',
-      role: {
-        roleName: 'Super Admin',
-        value: 'super',
-      },
+      roles: [
+        {
+          roleName: 'Super Admin',
+          value: 'super',
+        },
+      ],
     },
     {
       userId: '2',
@@ -22,10 +24,12 @@ function createFakeUserList() {
       realName: 'test user',
       desc: 'tester',
       token: 'fakeToken2',
-      role: {
-        roleName: 'Tester',
-        value: 'test',
-      },
+      roles: [
+        {
+          roleName: 'Tester',
+          value: 'test',
+        },
+      ],
     },
   ];
 }
@@ -37,29 +41,29 @@ const fakeCodeList: any = {
 };
 export default [
   // mock user login
-  // {
-  //   url: '/api/oauth/noToken/login',
-  //   timeout: 200,
-  //   method: 'post',
-  //   response: ({ body }) => {
-  //     const { username, password } = body;
-  //     const checkUser = createFakeUserList().find(
-  //       (item) => item.username === username && password === item.password
-  //     );
-  //     if (!checkUser) {
-  //       return resultError('Incorrect account or password！');
-  //     }
-  //     const { userId, username: _username, token, realName, desc, role } = checkUser;
-  //     return resultSuccess({
-  //       role,
-  //       userId,
-  //       username: _username,
-  //       token,
-  //       realName,
-  //       desc,
-  //     });
-  //   },
-  // },
+  {
+    url: '/api/login',
+    timeout: 200,
+    method: 'post',
+    response: ({ body }) => {
+      const { username, password } = body;
+      const checkUser = createFakeUserList().find(
+        (item) => item.username === username && password === item.password
+      );
+      if (!checkUser) {
+        return resultError('Incorrect account or password！');
+      }
+      const { userId, username: _username, token, realName, desc, roles } = checkUser;
+      return resultSuccess({
+        roles,
+        userId,
+        username: _username,
+        token,
+        realName,
+        desc,
+      });
+    },
+  },
   {
     url: '/api/getUserInfoById',
     method: 'get',

@@ -9,7 +9,11 @@
     @click="handleGoHome"
   >
     <img src="../../../assets/images/logo.png" />
-    <div class="ml-2 ellipsis" :class="[`${prefixCls}__title`]" v-show="showTitle">
+    <div
+      class="ml-2 truncate xs:opacity-0 md:opacity-100"
+      :class="`${prefixCls}__title`"
+      v-show="showTitle"
+    >
       {{ title }}
     </div>
   </div>
@@ -20,12 +24,10 @@
   import { useGlobSetting } from '/@/hooks/setting';
   import { useGo } from '/@/hooks/web/usePage';
   import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
+  import { useDesign } from '/@/hooks/web/useDesign';
 
   import { PageEnum } from '/@/enums/pageEnum';
-
   import { propTypes } from '/@/utils/propTypes';
-
-  import { useDesign } from '/@/hooks/web/useDesign';
 
   export default defineComponent({
     name: 'AppLogo',
@@ -87,12 +89,7 @@
     &__title {
       font-size: 16px;
       font-weight: 700;
-      opacity: 0;
       transition: all 0.5s;
-
-      .respond-to(medium,{
-       opacity: 1;
-      });
     }
   }
 </style>
