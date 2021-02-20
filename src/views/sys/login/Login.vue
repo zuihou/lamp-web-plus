@@ -179,7 +179,7 @@
           if (userInfo) {
             notification.success({
               message: t('sys.login.loginSuccessTitle'),
-              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.name}`,
               duration: 3,
             });
           }
@@ -285,10 +285,10 @@
 
         .code-image {
           display: inline-block;
+          width: 115px;
+          height: 42px;
           vertical-align: top;
           cursor: pointer;
-          height: 42px;
-          width: 115px;
         }
       }
     }

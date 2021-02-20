@@ -37,20 +37,28 @@ export interface RoleInfo {
 export interface LoginResultModel {
   userId: string | number;
   token: string;
-  role: RoleInfo;
+  tokenType: string;
+  refreshToken: string;
+  name: string;
+  account: string;
+  avatar: string;
+  workDescribe: string;
+  expire: string;
+  expiration: string;
+  expireMillis: string;
 }
 
 /**
  * @description: Get user information return value
  */
 export interface GetUserInfoByUserIdModel {
-  roles: RoleInfo[];
   // 用户id
-  userId: string | number;
+  id: string | number;
   // 用户名
-  username: string;
+  account?: string;
   // 真实名字
-  realName: string;
+  name?: string;
   // 介绍
-  desc?: string;
+  workDescribe?: string;
+  avatar?: string;
 }

@@ -1,10 +1,14 @@
 // token key
-export const TOKEN_KEY = 'TOKEN';
-// tenant key
-export const TENANT_KEY = 'TENANT';
+export const TOKEN_KEY = 'TOKEN__';
+// 刷新Token key
+export const REFRESH_TOKEN_KEY = 'REFRESH__TOKEN__';
+// 租户编码 key
+export const TENANT_KEY = 'TENANT__';
 
-// user info key
+// 用户信息 key
 export const USER_INFO_KEY = 'USER__INFO__';
+// 过期时间 key
+export const EXPIRE_TIME = 'EXPIRE__TIME__';
 
 // role info key
 export const ROLES_KEY = 'ROLES__KEY__';

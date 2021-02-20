@@ -12,7 +12,15 @@ import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
 
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
-import { CacheTypeEnum, ROLES_KEY, TOKEN_KEY, TENANT_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import {
+  CacheTypeEnum,
+  ROLES_KEY,
+  TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  TENANT_KEY,
+  USER_INFO_KEY,
+  EXPIRE_TIME,
+} from '/@/enums/cacheEnum';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 
@@ -52,6 +60,11 @@ class User extends VuexModule {
 
   // token
   private tokenState = '';
+
+  // refreshToken
+  private refreshTokenState = '';
+
+  private expireTimeState = '';
 
   private tenantState = '';
 
@@ -101,7 +114,19 @@ class User extends VuexModule {
   }
 
   @Mutation
-  commitTanantState(info: string): void {
+  commitRefreshTokenState(info: string): void {
+    this.refreshTokenState = info;
+    setCache(REFRESH_TOKEN_KEY, info);
+  }
+
+  @Mutation
+  commitExpireTimeState(info: string): void {
+    this.expireTimeState = info;
+    setCache(EXPIRE_TIME, info);
+  }
+
+  @Mutation
+  commitTenantState(info: string): void {
     this.tenantState = info;
     setCache(TENANT_KEY, info);
   }
@@ -118,19 +143,26 @@ class User extends VuexModule {
   ): Promise<GetUserInfoByUserIdModel | null> {
     try {
       const { goHome = true, mode, ...loginParams } = params;
-      debugger;
       loginParams.tenant = `${Base64.encode(loginParams.tenantView)}`;
-      this.commitTanantState(loginParams.tenant);
+      this.commitTenantState(loginParams.tenant);
       const data = await loginApi(loginParams, mode);
-      debugger;
-      const { token, userId } = data;
+      const { token, refreshToken, expiration } = data;
 
       // save token
       this.commitTokenState(token);
+      this.commitRefreshTokenState(refreshToken);
+      this.commitExpireTimeState(expiration);
+      const userInfo = {
+        id: data.userId,
+        account: data.account,
+        name: data.name,
+        avatar: data.avatar,
+        workDescribe: data.workDescribe,
+      };
+      this.commitUserInfoState(userInfo);
 
       // get user info
-      const userInfo = await this.getUserInfoAction({ userId });
-
+      // const userInfo = await this.getUserInfoAction({ userId });
       goHome && (await router.replace(PageEnum.BASE_HOME));
       return userInfo;
     } catch (error) {
@@ -168,10 +200,10 @@ class User extends VuexModule {
   @Action
   async getUserInfoAction({ userId }: GetUserInfoByUserIdParams) {
     const userInfo = await getUserInfoById({ userId });
-    const { roles } = userInfo;
-    const roleList = roles.map((item) => item.value) as RoleEnum[];
+    // const { roles } = userInfo;
+    // const roleList = roles.map((item) => item.value) as RoleEnum[];
     this.commitUserInfoState(userInfo);
-    this.commitRoleListState(roleList);
+    // this.commitRoleListState(roleList);
     return userInfo;
   }
 

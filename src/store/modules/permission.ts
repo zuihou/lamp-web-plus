@@ -85,8 +85,9 @@ class Permission extends VuexModule {
   @Action
   async buildRoutesAction(id?: number | string): Promise<AppRouteRecordRaw[]> {
     const { t } = useI18n();
+    debugger;
     let routes: AppRouteRecordRaw[] = [];
-    const roleList = toRaw(userStore.getRoleListState);
+    const roleList = toRaw(userStore.getRoleListState) || [];
 
     const { permissionMode } = appStore.getProjectConfig;
 
@@ -105,7 +106,7 @@ class Permission extends VuexModule {
         duration: 1,
       });
       // 这里获取后台路由菜单逻辑自行修改
-      const paramId = id || userStore.getUserInfoState.userId;
+      const paramId = id || userStore.getUserInfoState.id;
       if (!paramId) {
         throw new Error('paramId is undefined!');
       }
