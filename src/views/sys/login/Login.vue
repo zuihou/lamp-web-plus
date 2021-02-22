@@ -175,7 +175,6 @@
         try {
           const data = await form.validate();
           const userInfo = await userStore.login(toRaw(data));
-          debugger;
           if (userInfo) {
             notification.success({
               message: t('sys.login.loginSuccessTitle'),

@@ -36,7 +36,6 @@ const transform: AxiosTransform = {
    * @description: 处理请求数据
    */
   transformRequestData: (res: AxiosResponse<Result>, options: RequestOptions) => {
-    debugger;
     const { t } = useI18n();
     const { isTransformRequestResult } = options;
     // 不进行任何处理，直接返回
@@ -147,7 +146,6 @@ const transform: AxiosTransform = {
    * @description: 请求拦截器处理
    */
   requestInterceptors: (config) => {
-    debugger;
     const tokenName = 'token';
     const { tenantType, clientId, clientSecret } = globSetting;
 

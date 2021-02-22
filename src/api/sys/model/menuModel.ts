@@ -14,7 +14,8 @@ export interface RouteItem {
  * @description: Get menu interface
  */
 export interface getMenuListByIdParams {
-  id: number | string;
+  userId?: number | string;
+  group?: string;
 }
 
 /**

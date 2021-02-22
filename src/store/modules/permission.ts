@@ -110,8 +110,9 @@ class Permission extends VuexModule {
       if (!paramId) {
         throw new Error('paramId is undefined!');
       }
-      let routeList = (await getMenuListById({ id: paramId })) as AppRouteRecordRaw[];
-
+      debugger;
+      let routeList = (await getMenuListById({ userId: paramId })) as AppRouteRecordRaw[];
+      debugger;
       // 动态引入组件
       routeList = transformObjToRoute(routeList);
       //  后台路由转菜单结构
