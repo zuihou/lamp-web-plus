@@ -17,7 +17,9 @@ function asyncImportRoute(routes: AppRouteRecordRaw[] | undefined) {
   routes.forEach((item) => {
     const { component, name } = item;
     const { children } = item;
-    if (component) {
+    if ((component as string).toUpperCase() === 'LAYOUT') {
+      item.component = getParentLayout(name);
+    } else if (component) {
       item.component = dynamicImport(dynamicViewsModules, component as string);
     } else if (name) {
       item.component = getParentLayout(name);
