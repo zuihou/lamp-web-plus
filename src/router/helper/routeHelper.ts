@@ -55,11 +55,12 @@ function dynamicImport(
 // Turn background objects into routing objects
 export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModule[]): T[] {
   LayoutMap.set('LAYOUT', LAYOUT);
-
+  debugger;
   routeList.forEach((route) => {
+    debugger;
     if (route.component) {
       if ((route.component as string).toUpperCase() === 'LAYOUT') {
-        route.component = LayoutMap.get(route.component as LayoutMapKey);
+        route.component = LayoutMap.get((route.component as string).toUpperCase() as LayoutMapKey);
       } else {
         route.children = [cloneDeep(route)];
         route.component = LAYOUT;

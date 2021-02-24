@@ -9,7 +9,7 @@ enum Api {
 /**
  * @description: Get user menu based on id
  */
-export function getMenuListById(params: getMenuListByIdParams) {
+export function getMenuListById(params?: getMenuListByIdParams) {
   return defHttp.request<getMenuListByIdParamsResultModel>({
     url: Api.GetMenuListById,
     method: 'GET',

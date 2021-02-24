@@ -106,18 +106,16 @@ class Permission extends VuexModule {
         duration: 1,
       });
       // 这里获取后台路由菜单逻辑自行修改
-      const paramId = id || userStore.getUserInfoState.id;
-      if (!paramId) {
-        throw new Error('paramId is undefined!');
-      }
       debugger;
-      let routeList = (await getMenuListById({ userId: paramId })) as AppRouteRecordRaw[];
+      console.log(id);
+      let routeList = (await getMenuListById()) as AppRouteRecordRaw[];
       debugger;
       // 动态引入组件
       routeList = transformObjToRoute(routeList);
+      debugger;
       //  后台路由转菜单结构
       const backMenuList = transformRouteToMenu(routeList);
-
+      debugger;
       this.commitBackMenuListState(backMenuList);
 
       routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];

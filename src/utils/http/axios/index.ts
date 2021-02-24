@@ -177,7 +177,7 @@ const transform: AxiosTransform = {
     const { t } = useI18n();
     errorStore.setupErrorHandle(error);
     const { response, code, message } = error || {};
-    const msg: string = response?.data?.error?.message ?? '';
+    const msg: string = response?.data?.msg ?? '';
     const err: string = error?.toString?.() ?? '';
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {

@@ -45,7 +45,7 @@ export function transformMenuModule(menuModule: MenuModule): Menu {
 export function transformRouteToMenu(routeModList: AppRouteModule[]) {
   const cloneRouteModList = cloneDeep(routeModList);
   const routeList: AppRouteRecordRaw[] = [];
-
+  debugger;
   // cloneRouteModList = filter(cloneRouteModList, (node) => {
   //   if (Reflect.has(node?.meta ?? {}, 'hideMenu')) {
   //     return !node?.meta.hideMenu;

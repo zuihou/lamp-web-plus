@@ -163,7 +163,7 @@ class User extends VuexModule {
 
       // get user info
       // const userInfo = await this.getUserInfoAction({ userId });
-      goHome && (await router.replace(PageEnum.BASE_HOME));
+      goHome && (await router.replace('/workbench/notice'));
       return userInfo;
     } catch (error) {
       return null;
