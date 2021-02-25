@@ -1,3 +1,43 @@
+## Wip
+
+### ✨ Features
+
+- axios 支持 form-data 格式请求
+
+### ⚡ Performance Improvements
+
+- 登录界面动画优化
+- 修复 github 仓库体积过大问题.
+- 默认隐藏表格全屏按钮
+
+### 🐛 Bug Fixes
+
+- 修复验证码组件警告问题
+- 修复表格不能正确的获取选中行
+
+## 2.0.1 (2021-02-21)
+
+### ✨ Refactor
+
+- 登录页重构,新增注册页面/重置密码页面/手机登录/二维码登录
+
+### ✨ Features
+
+- 新增 `settingButtonPosition`配置项,用于配置`设置`按钮位置
+- `modal`可以通过双击头部切换全屏
+- 新增`CountDownInput`组件
+
+### ⚡ Performance Improvements
+
+- 优化可编辑居中样式及下拉框宽度过短
+- 表格新增编辑时`edit-change`事件监听
+
+### 🐛 Bug Fixes
+
+- 修复图片预览样式错误
+- 修复图标样式问题
+- 修复可编辑表格下拉回显问题
+
 ## 2.0.0 (2021-02-18)
 
 ## (破坏性更新) Breaking changes

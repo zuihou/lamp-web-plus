@@ -4,7 +4,6 @@
 import type { AxiosResponse } from 'axios';
 import type { CreateAxiosOptions, RequestOptions, Result } from './types';
 import { VAxios } from './Axios';
-import { getToken, getTenant } from '/@/utils/auth';
 import { AxiosTransform } from './axiosTransform';
 
 import { checkStatus } from './checkStatus';
@@ -21,6 +20,7 @@ import { errorResult } from './const';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { createNow, formatRequestDate } from './helper';
 import { Base64 } from 'js-base64';
+import { userStore } from '/@/store/modules/user';
 
 const globSetting = useGlobSetting();
 const prefix = globSetting.urlPrefix;
@@ -50,7 +50,7 @@ const transform: AxiosTransform = {
       // return '[HTTP] Request has no return value';
       return errorResult;
     }
-    //  这里 code，result，msg为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+    //  这里 code，data，msg为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { code, data, msg } = resData;
 
     // 这里逻辑可以根据项目进行修改
@@ -142,7 +142,6 @@ const transform: AxiosTransform = {
   },
 
   /**
-   * 请求之前处理参数的拦截器
    * @description: 请求拦截器处理
    */
   requestInterceptors: (config) => {
@@ -152,7 +151,7 @@ const transform: AxiosTransform = {
     // 增加token
     const isToken = config.headers['x-is-token'] === false ? config.headers['x-is-token'] : true;
 
-    const token = getToken();
+    const token = userStore.getTokenState;
     if (isToken && token) {
       config.headers[tokenName] = 'Bearer ' + token;
     }
@@ -160,7 +159,7 @@ const transform: AxiosTransform = {
     // 增加租户编码
     const isTenant = config.headers['x-is-tenant'] === false ? config.headers['x-is-tenant'] : true;
     if (isTenant && tenantType !== 'NONE') {
-      config.headers.tenant = getTenant();
+      config.headers.tenant = userStore.getTenantState;
     }
 
     // 添加客户端信息

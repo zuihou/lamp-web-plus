@@ -8,6 +8,8 @@ import { cloneDeep } from 'lodash-es';
 import type { RequestOptions, CreateAxiosOptions, Result, UploadFileParams } from './types';
 import { errorResult } from './const';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
+import qs from 'qs';
+import { RequestEnum } from '../../../enums/httpEnum';
 
 export * from './axiosTransform';
 
@@ -144,6 +146,25 @@ export class VAxios {
     });
   }
 
+  // support form-data
+  supportFormData(config: AxiosRequestConfig) {
+    const headers = this.options?.headers;
+    const contentType = headers?.['Content-Type'] || headers?.['content-type'];
+
+    if (
+      contentType !== ContentTypeEnum.FORM_URLENCODED ||
+      !Reflect.has(config, 'data') ||
+      config.method?.toUpperCase() === RequestEnum.GET
+    ) {
+      return config;
+    }
+
+    return {
+      ...config,
+      data: qs.stringify(config.data),
+    };
+  }
+
   /**
    * @description:   请求方法
    */
@@ -159,6 +180,8 @@ export class VAxios {
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt);
     }
+
+    conf = this.supportFormData(conf);
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)

@@ -19,7 +19,7 @@ import {
   REFRESH_TOKEN_KEY,
   TENANT_KEY,
   USER_INFO_KEY,
-  EXPIRE_TIME,
+  EXPIRE_TIME_KEY,
 } from '/@/enums/cacheEnum';
 
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -79,6 +79,14 @@ class User extends VuexModule {
     return this.tokenState || getCache<string>(TOKEN_KEY);
   }
 
+  get getRefreshTokenState(): string {
+    return this.refreshTokenState || getCache<string>(REFRESH_TOKEN_KEY);
+  }
+
+  get getExpireTimeState(): string {
+    return this.expireTimeState || getCache<string>(EXPIRE_TIME_KEY);
+  }
+
   get getTenantState(): string {
     return this.tenantState || getCache<string>(TENANT_KEY);
   }
@@ -122,7 +130,7 @@ class User extends VuexModule {
   @Mutation
   commitExpireTimeState(info: string): void {
     this.expireTimeState = info;
-    setCache(EXPIRE_TIME, info);
+    setCache(EXPIRE_TIME_KEY, info);
   }
 
   @Mutation
@@ -208,10 +216,10 @@ class User extends VuexModule {
   }
 
   /**
-   * @description: login out
+   * @description: logout
    */
   @Action
-  async loginOut(goLogin = false) {
+  async logout(goLogin = false) {
     goLogin && router.push(PageEnum.BASE_LOGIN);
   }
 
@@ -224,10 +232,10 @@ class User extends VuexModule {
     const { t } = useI18n();
     createConfirm({
       iconType: 'warning',
-      title: t('sys.app.loginOutTip'),
-      content: t('sys.app.loginOutMessage'),
+      title: t('sys.app.logoutTip'),
+      content: t('sys.app.logoutMessage'),
       onOk: async () => {
-        await this.loginOut(true);
+        await this.logout(true);
       },
     });
   }
