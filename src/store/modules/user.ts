@@ -185,6 +185,8 @@ class User extends VuexModule {
   async loadCaptcha({ key }: GetCaptchaByKeyParams): Promise<string | ''> {
     try {
       const res = await loadCaptcha(key).catch((e) => {
+        console.log('获取验证码异常');
+        console.error(e);
         const { createMessage } = useMessage();
         if (e.toString().indexOf('429') !== -1) {
           createMessage.error('获取验证码过于频繁，请1分钟后再试');
@@ -196,11 +198,16 @@ class User extends VuexModule {
         console.log('系统维护中，请稍微再试~');
         return '';
       }
+      console.log('获取验证码成功');
+      console.log(res);
+      console.log(typeof res === 'string');
       return (
         'data:image/png;base64,' +
         btoa(new Uint8Array(res).reduce((data, byte) => data + String.fromCharCode(byte), ''))
       );
     } catch (error) {
+      console.log('验证码try');
+      console.error(error);
       return '';
     }
   }

@@ -36,8 +36,11 @@ const transform: AxiosTransform = {
    * @description: 处理请求数据
    */
   transformRequestData: (res: AxiosResponse<Result>, options: RequestOptions) => {
+    console.log('transformRequestData--');
+    console.log(res);
     const { t } = useI18n();
     const { isTransformRequestResult } = options;
+    console.log(isTransformRequestResult);
     // 不进行任何处理，直接返回
     // 用于页面代码可能需要直接获取code，data，message这些信息时开启
     if (!isTransformRequestResult) {

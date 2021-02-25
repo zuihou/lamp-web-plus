@@ -173,6 +173,7 @@
       // 加载验证码
       async function loadCaptcha() {
         const captcha = await userStore.loadCaptcha({ key: formData.key });
+        console.log(captcha);
         formState.captchaSrc = captcha;
       }
 

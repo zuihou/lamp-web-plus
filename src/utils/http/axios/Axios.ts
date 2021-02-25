@@ -186,6 +186,8 @@ export class VAxios {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
+          console.log('request--');
+          console.log(res);
           if (transformRequestData && isFunction(transformRequestData)) {
             const ret = transformRequestData(res, opt);
             ret !== errorResult ? resolve(ret) : reject(new Error('request error!'));
