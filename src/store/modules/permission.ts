@@ -85,7 +85,6 @@ class Permission extends VuexModule {
   @Action
   async buildRoutesAction(id?: number | string): Promise<AppRouteRecordRaw[]> {
     const { t } = useI18n();
-    debugger;
     let routes: AppRouteRecordRaw[] = [];
     const roleList = toRaw(userStore.getRoleListState) || [];
 
@@ -106,16 +105,12 @@ class Permission extends VuexModule {
         duration: 1,
       });
       // 这里获取后台路由菜单逻辑自行修改
-      debugger;
       console.log(id);
       let routeList = (await getMenuListById()) as AppRouteRecordRaw[];
-      debugger;
       // 动态引入组件
       routeList = transformObjToRoute(routeList);
-      debugger;
       //  后台路由转菜单结构
       const backMenuList = transformRouteToMenu(routeList);
-      debugger;
       this.commitBackMenuListState(backMenuList);
 
       routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];

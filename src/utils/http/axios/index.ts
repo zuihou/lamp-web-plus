@@ -36,11 +36,8 @@ const transform: AxiosTransform = {
    * @description: 处理请求数据
    */
   transformRequestData: (res: AxiosResponse<Result>, options: RequestOptions) => {
-    console.log('transformRequestData--');
-    console.log(res);
     const { t } = useI18n();
     const { isTransformRequestResult } = options;
-    console.log(isTransformRequestResult);
     // 不进行任何处理，直接返回
     // 用于页面代码可能需要直接获取code，data，message这些信息时开启
     if (!isTransformRequestResult) {
@@ -106,7 +103,6 @@ const transform: AxiosTransform = {
    * @param options 操作
    */
   beforeRequestHook: (config, options) => {
-    debugger;
     // 全局api前缀， 局部url前缀， 是否将参数拼接到url中， 是否格式化日期， 是否在url后面拼接时间戳
     const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true } = options;
 

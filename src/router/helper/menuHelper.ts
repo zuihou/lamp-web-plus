@@ -45,7 +45,6 @@ export function transformMenuModule(menuModule: MenuModule): Menu {
 export function transformRouteToMenu(routeModList: AppRouteModule[]) {
   const cloneRouteModList = cloneDeep(routeModList);
   const routeList: AppRouteRecordRaw[] = [];
-  debugger;
   cloneRouteModList.forEach((item) => {
     if (item.meta?.single) {
       const realItem = item?.children?.[0];

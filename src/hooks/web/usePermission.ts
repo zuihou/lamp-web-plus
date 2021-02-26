@@ -38,7 +38,6 @@ export function usePermission() {
   async function resume(id?: string | number) {
     tabStore.commitClearCache();
     resetRouter();
-    debugger;
     const routes = await permissionStore.buildRoutesAction(id);
     routes.forEach((route) => {
       router.addRoute((route as unknown) as RouteRecordRaw);
