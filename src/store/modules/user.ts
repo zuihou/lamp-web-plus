@@ -2,6 +2,7 @@ import type {
   LoginParams,
   GetUserInfoByUserIdModel,
   GetUserInfoByUserIdParams,
+  GetAuthorityResourceByUserIdParams,
   GetCaptchaByKeyParams,
 } from '/@/api/sys/model/userModel';
 import { Base64 } from 'js-base64';
@@ -10,10 +11,10 @@ import store from '/@/store/index';
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
 import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
 
+import { permissionStore } from '/@/store/modules/permission';
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
 import {
-  CacheTypeEnum,
   ROLES_KEY,
   TOKEN_KEY,
   REFRESH_TOKEN_KEY,
@@ -26,10 +27,9 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 import router from '/@/router';
 
-import { loginApi, getUserInfoById, loadCaptcha } from '/@/api/sys/user';
+import { loginApi, getUserInfoById, loadCaptcha, getPermCodeByUserId } from '/@/api/sys/user';
 
-import { setLocal, getLocal, getSession, setSession } from '/@/utils/cache/persistent';
-import { useProjectSetting } from '/@/hooks/setting';
+import { getCache, setCache } from '/@/utils/cache/persistent';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 
@@ -37,20 +37,6 @@ export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
 const NAME = 'user';
 hotModuleUnregisterModule(NAME);
-
-const { permissionCacheType } = useProjectSetting();
-
-function getCache<T>(key: string) {
-  const fn = permissionCacheType === CacheTypeEnum.LOCAL ? getLocal : getSession;
-  return fn(key) as T;
-}
-
-function setCache(USER_INFO_KEY: string, info: any) {
-  if (!info) return;
-  setLocal(USER_INFO_KEY, info, true);
-  // TODO
-  setSession(USER_INFO_KEY, info, true);
-}
 
 @Module({ namespaced: true, name: NAME, dynamic: true, store })
 class User extends VuexModule {
@@ -150,7 +136,7 @@ class User extends VuexModule {
   ): Promise<GetUserInfoByUserIdModel | null> {
     try {
       const { goHome = true, mode, ...loginParams } = params;
-      loginParams.tenant = `${Base64.encode(loginParams.tenantView)}`;
+      loginParams.tenant = `${Base64.encode(loginParams.tenantView as string)}`;
       this.commitTenantState(loginParams.tenant);
       const data = await loginApi(loginParams, mode);
       const { token, refreshToken, expiration } = data;
@@ -168,8 +154,9 @@ class User extends VuexModule {
       };
       this.commitUserInfoState(userInfo);
 
-      // get user info
-      // const userInfo = await this.getUserInfoAction({ userId });
+      // 获取权限
+      await this.getPermCodeByUserId();
+
       goHome && (await router.replace(PageEnum.BASE_HOME));
       return userInfo;
     } catch (error) {
@@ -214,6 +201,16 @@ class User extends VuexModule {
     this.commitUserInfoState(userInfo);
     // this.commitRoleListState(roleList);
     return userInfo;
+  }
+
+  @Action
+  async getPermCodeByUserId(params?: GetAuthorityResourceByUserIdParams) {
+    const perm = await getPermCodeByUserId(params);
+    const { resourceList } = perm;
+    permissionStore.commitPermCodeListState(resourceList);
+    permissionStore.commitPermState(perm);
+    debugger;
+    return perm;
   }
 
   /**

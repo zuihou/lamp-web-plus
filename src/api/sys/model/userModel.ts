@@ -4,12 +4,12 @@
 export interface LoginParams {
   account: string;
   password: string;
-  tenantView: string;
-  tenant: string;
-  code: string;
-  key: string;
-  grantType: string;
-  refreshToken: string;
+  tenantView?: string;
+  tenant?: string;
+  code?: string;
+  key?: string;
+  grantType?: string;
+  refreshToken?: string;
 }
 
 /**
@@ -24,6 +24,11 @@ export interface GetCaptchaByKeyParams {
  */
 export interface GetUserInfoByUserIdParams {
   userId: string | number;
+}
+
+export interface GetAuthorityResourceByUserIdParams {
+  userId: string | number;
+  menuId: string | number;
 }
 
 export interface RoleInfo {
@@ -61,4 +66,18 @@ export interface GetUserInfoByUserIdModel {
   // 介绍
   workDescribe?: string;
   avatar?: string;
+}
+
+/**
+ * @description: 获取用户的资源和角色
+ */
+export interface GetAuthorityResourceByUserIdModel {
+  // 是否启用
+  enabled: boolean;
+  // 区分大小写
+  caseSensitive: boolean;
+  // 拥有的资源编码
+  resourceList: string[];
+  // 用用的角色编码
+  roleList: string[];
 }

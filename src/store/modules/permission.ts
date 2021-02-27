@@ -20,6 +20,9 @@ import { transformRouteToMenu } from '/@/router/helper/menuHelper';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
+import { GetAuthorityResourceByUserIdModel } from '/@/api/sys/model/userModel';
+import { PERM_CODE_KEY, PERM_KEY } from '/@/enums/cacheEnum';
+import { getCache, setCache } from '/@/utils/cache/persistent';
 
 const { createMessage } = useMessage();
 const NAME = 'permission';
@@ -27,7 +30,10 @@ hotModuleUnregisterModule(NAME);
 @Module({ dynamic: true, namespaced: true, store, name: NAME })
 class Permission extends VuexModule {
   // Permission code list
-  private permCodeListState: string[] = [];
+  private permCodeListState?: string[];
+
+  // 权限
+  private permState?: GetAuthorityResourceByUserIdModel;
 
   // Whether the route has been dynamically added
   private isDynamicAddedRouteState = false;
@@ -39,7 +45,12 @@ class Permission extends VuexModule {
   private backMenuListState: Menu[] = [];
 
   get getPermCodeListState() {
-    return this.permCodeListState;
+    debugger;
+    return this.permCodeListState || getCache(PERM_CODE_KEY) || [];
+  }
+
+  get getPermState() {
+    return this.permState || getCache(PERM_KEY) || {};
   }
 
   get getBackMenuListState() {
@@ -55,8 +66,15 @@ class Permission extends VuexModule {
   }
 
   @Mutation
+  commitPermState(perm: GetAuthorityResourceByUserIdModel): void {
+    this.permState = perm;
+    setCache(PERM_KEY, perm);
+  }
+
+  @Mutation
   commitPermCodeListState(codeList: string[]): void {
     this.permCodeListState = codeList;
+    setCache(PERM_CODE_KEY, codeList);
   }
 
   @Mutation
@@ -78,6 +96,7 @@ class Permission extends VuexModule {
   commitResetState(): void {
     this.isDynamicAddedRouteState = false;
     this.permCodeListState = [];
+    this.permState = {} as GetAuthorityResourceByUserIdModel;
     this.backMenuListState = [];
     this.lastBuildMenuTimeState = 0;
   }
@@ -105,8 +124,12 @@ class Permission extends VuexModule {
         duration: 1,
       });
       // 这里获取后台路由菜单逻辑自行修改
-      console.log(id);
-      let routeList = (await getMenuListById()) as AppRouteRecordRaw[];
+      const paramId = id || userStore.getUserInfoState.id;
+      if (!paramId) {
+        throw new Error('paramId is undefined!');
+      }
+
+      let routeList = (await getMenuListById({ userId: paramId })) as AppRouteRecordRaw[];
       // 动态引入组件
       routeList = transformObjToRoute(routeList);
       //  后台路由转菜单结构

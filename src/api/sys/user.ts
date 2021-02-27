@@ -4,12 +4,14 @@ import {
   LoginResultModel,
   GetUserInfoByUserIdParams,
   GetUserInfoByUserIdModel,
+  GetAuthorityResourceByUserIdParams,
+  GetAuthorityResourceByUserIdModel,
 } from './model/userModel';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 
 enum Api {
   GetUserInfoById = '/getUserInfoById',
-  GetPermCodeByUserId = '/getPermCodeByUserId',
+  GetPermCodeByUserId = '/oauth/resource/visible',
   Login = '/oauth/noToken/login',
   LoadCaptcha = '/oauth/anno/captcha',
 }
@@ -59,8 +61,12 @@ export function loadCaptcha(key: String) {
   );
 }
 
-export function getPermCodeByUserId(params: GetUserInfoByUserIdParams) {
-  return defHttp.get<string[]>({
+/**
+ * 根据
+ * @param params
+ */
+export function getPermCodeByUserId(params?: GetAuthorityResourceByUserIdParams) {
+  return defHttp.get<GetAuthorityResourceByUserIdModel>({
     url: Api.GetPermCodeByUserId,
     params,
   });

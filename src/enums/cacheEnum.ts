@@ -7,6 +7,10 @@ export const TENANT_KEY = 'TENANT__';
 
 // 用户信息 key
 export const USER_INFO_KEY = 'USER__INFO__';
+// 资源编码
+export const PERM_CODE_KEY = 'PERM__CODE__';
+// 权限编码
+export const PERM_KEY = 'PERM__';
 // 过期时间 key
 export const EXPIRE_TIME_KEY = 'EXPIRE__TIME__';
 

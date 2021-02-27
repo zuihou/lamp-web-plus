@@ -43,8 +43,8 @@ class Lock extends VuexModule {
   public async unLockAction({ password }: { password: string }) {
     const tryLogin = async () => {
       try {
-        const username = userStore.getUserInfoState.username;
-        const res = await userStore.login({ username, password, goHome: false, mode: 'none' });
+        const account = userStore.getUserInfoState.account || '';
+        const res = await userStore.login({ account, password, goHome: false, mode: 'none' });
         if (res) {
           this.resetLockInfo();
         }

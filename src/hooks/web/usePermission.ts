@@ -52,6 +52,7 @@ export function usePermission() {
    */
   function hasPermission(value?: RoleEnum | RoleEnum[] | string | string[], def = true): boolean {
     const permMode = appStore.getProjectConfig.permissionMode;
+    debugger;
     if (PermissionModeEnum.ROLE === permMode) {
       // Visible by default
       if (!value) {

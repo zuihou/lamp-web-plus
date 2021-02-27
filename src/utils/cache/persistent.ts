@@ -1,6 +1,7 @@
 import { createStorage } from '/@/utils/cache';
 
-import { BASE_LOCAL_CACHE_KEY, BASE_SESSION_CACHE_KEY } from '/@/enums/cacheEnum';
+import { BASE_LOCAL_CACHE_KEY, BASE_SESSION_CACHE_KEY, CacheTypeEnum } from '/@/enums/cacheEnum';
+import { useProjectSetting } from '/@/hooks/setting';
 
 const ls = createStorage(localStorage);
 const ss = createStorage();
@@ -100,6 +101,19 @@ export function persistentCache() {
   const sessionCache = cacheStore.session;
   ls.set(BASE_LOCAL_CACHE_KEY, localCache);
   ss.set(BASE_SESSION_CACHE_KEY, sessionCache);
+}
+
+const { permissionCacheType } = useProjectSetting();
+
+export function getCache<T>(key: string) {
+  const fn = permissionCacheType === CacheTypeEnum.LOCAL ? getLocal : getSession;
+  return fn(key) as T;
+}
+
+export function setCache(key: string, info: any) {
+  if (!info) return;
+  setLocal(key, info, true);
+  setSession(key, info, true);
 }
 
 (() => {
