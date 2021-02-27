@@ -18,10 +18,9 @@ enum Api {
  * @description: user login api
  */
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
-  return defHttp.request<LoginResultModel>(
+  return defHttp.post<LoginResultModel>(
     {
       url: Api.Login,
-      method: 'POST',
       params,
       headers: {
         tenant: params.tenant,
@@ -39,9 +38,8 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
  * @description: getUserInfoById
  */
 export function getUserInfoById(params: GetUserInfoByUserIdParams) {
-  return defHttp.request<GetUserInfoByUserIdModel>({
+  return defHttp.get<GetUserInfoByUserIdModel>({
     url: Api.GetUserInfoById,
-    method: 'GET',
     params,
   });
 }
@@ -62,9 +60,8 @@ export function loadCaptcha(key: String) {
 }
 
 export function getPermCodeByUserId(params: GetUserInfoByUserIdParams) {
-  return defHttp.request<string[]>({
+  return defHttp.get<string[]>({
     url: Api.GetPermCodeByUserId,
-    method: 'GET',
     params,
   });
 }
