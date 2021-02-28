@@ -7,7 +7,7 @@
     <FormItem name="key">
       <Input size="large" v-model:value="formData.key" :hidden="true" />
     </FormItem>
-    <FormItem name="tenantView" class="enter-x">
+    <FormItem name="tenantView" v-show="formState.isMultiTenant" class="enter-x">
       <Input
         size="large"
         v-model:value="formData.tenantView"
@@ -26,7 +26,7 @@
       />
     </FormItem>
 
-    <ARow class="enter-x">
+    <ARow class="enter-x" v-show="formState.showCaptcha">
       <ACol>
         <FormItem class="code-input" name="code">
           <Input
@@ -113,6 +113,7 @@
   } from '@ant-design/icons-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
 
+  import { useGlobSetting } from '/@/hooks/setting';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
 
@@ -145,6 +146,7 @@
       const { notification } = useMessage();
       const { prefixCls } = useDesign('login');
 
+      const globSetting = useGlobSetting();
       const { setLoginState, getLoginState } = useLoginState();
       const { getFormRules } = useFormRules();
 
@@ -161,7 +163,7 @@
         account: 'lamp',
         password: 'lamp',
         code: '',
-        grantType: 'captcha',
+        grantType: globSetting.showCaptcha === 'true' ? 'captcha' : 'password',
         key: randomNum(24, 16),
         verify: undefined,
       });
@@ -169,11 +171,12 @@
       const formState = reactive({
         loading: false,
         captchaSrc: '',
+        isMultiTenant: globSetting.multiTenantType !== 'NONE',
+        showCaptcha: globSetting.showCaptcha === 'true',
       });
       // 加载验证码
       async function loadCaptcha() {
         const captcha = await userStore.loadCaptcha({ key: formData.key });
-        console.log(captcha);
         formState.captchaSrc = captcha;
       }
 
@@ -193,6 +196,8 @@
               description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.name}`,
               duration: 3,
             });
+          } else {
+            loadCaptcha();
           }
         } finally {
           formState.loading = false;

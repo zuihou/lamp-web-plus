@@ -24,6 +24,8 @@ export default {
   // placeholder
   accountPlaceholder: 'Please input username',
   passwordPlaceholder: 'Please input password',
+  tenantPlaceholder: 'Please input Tenant Code',
+  codePlaceholder: 'Please input Captcha',
   smsPlaceholder: 'Please input sms code',
   mobilePlaceholder: 'Please input mobile',
   policyPlaceholder: 'Register after checking',

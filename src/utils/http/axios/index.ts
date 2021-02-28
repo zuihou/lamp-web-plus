@@ -145,7 +145,7 @@ const transform: AxiosTransform = {
    */
   requestInterceptors: (config) => {
     const tokenName = 'token';
-    const { tenantType, clientId, clientSecret } = globSetting;
+    const { multiTenantType, clientId, clientSecret } = globSetting;
 
     // 增加token
     const isToken = config.headers['x-is-token'] === false ? config.headers['x-is-token'] : true;
@@ -157,7 +157,7 @@ const transform: AxiosTransform = {
 
     // 增加租户编码
     const isTenant = config.headers['x-is-tenant'] === false ? config.headers['x-is-tenant'] : true;
-    if (isTenant && tenantType !== 'NONE') {
+    if (isTenant && multiTenantType !== 'NONE') {
       config.headers.tenant = userStore.getTenantState;
     }
 

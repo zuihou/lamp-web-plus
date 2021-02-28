@@ -1,6 +1,7 @@
 import { RuleObject } from 'ant-design-vue/lib/form/interface';
 import { ref, computed, unref, Ref } from 'vue';
 import { useI18n } from '/@/hooks/web/useI18n';
+import { useGlobSetting } from '/@/hooks/setting';
 
 export enum LoginStateEnum {
   LOGIN,
@@ -39,9 +40,12 @@ export function useFormValid<T extends Object = any>(formRef: Ref<any>) {
 
 export function useFormRules(formData?: Recordable) {
   const { t } = useI18n();
+  const globSetting = useGlobSetting();
 
   const getAccountFormRule = computed(() => createRule(t('sys.login.accountPlaceholder')));
   const getPasswordFormRule = computed(() => createRule(t('sys.login.passwordPlaceholder')));
+  const getCodeFormRule = computed(() => createRule(t('sys.login.codePlaceholder')));
+  const getTenantFormRule = computed(() => createRule(t('sys.login.tenantPlaceholder')));
   const getSmsFormRule = computed(() => createRule(t('sys.login.smsPlaceholder')));
   const getMobileFormRule = computed(() => createRule(t('sys.login.mobilePlaceholder')));
 
@@ -64,6 +68,8 @@ export function useFormRules(formData?: Recordable) {
   const getFormRules = computed(() => {
     const accountFormRule = unref(getAccountFormRule);
     const passwordFormRule = unref(getPasswordFormRule);
+    const codeFormRule = unref(getCodeFormRule);
+    const tenantFormRule = unref(getTenantFormRule);
     const smsFormRule = unref(getSmsFormRule);
     const mobileFormRule = unref(getMobileFormRule);
 
@@ -71,6 +77,16 @@ export function useFormRules(formData?: Recordable) {
       sms: smsFormRule,
       mobile: mobileFormRule,
     };
+    const loginRule = {
+      account: accountFormRule,
+      password: passwordFormRule,
+    };
+    if (globSetting.multiTenantType !== 'NONE') {
+      loginRule['tenantView'] = tenantFormRule;
+    }
+    if (globSetting.showCaptcha === 'true') {
+      loginRule['code'] = codeFormRule;
+    }
     switch (unref(currentState)) {
       // register form rules
       case LoginStateEnum.REGISTER:
@@ -97,10 +113,7 @@ export function useFormRules(formData?: Recordable) {
 
       // login form rules
       default:
-        return {
-          account: accountFormRule,
-          password: passwordFormRule,
-        };
+        return loginRule;
     }
   });
   return { getFormRules };

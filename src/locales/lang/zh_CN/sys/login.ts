@@ -25,6 +25,8 @@ export default {
   // placeholder
   accountPlaceholder: '请输入账号',
   passwordPlaceholder: '请输入密码',
+  tenantPlaceholder: '请输入租户编码',
+  codePlaceholder: '请输入验证码',
   smsPlaceholder: '请输入验证码',
   mobilePlaceholder: '请输入手机号码',
   policyPlaceholder: '勾选后才能注册',

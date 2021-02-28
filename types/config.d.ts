@@ -142,9 +142,10 @@ export interface GlobConfig {
   urlPrefix?: string;
   // Project abbreviation
   shortName: string;
-  tenantType?: string;
   clientId?: string;
   clientSecret?: string;
+  multiTenantType?: string;
+  showCaptcha?: stirng;
 }
 export interface GlobEnvConfig {
   // Site title
@@ -157,7 +158,12 @@ export interface GlobEnvConfig {
   VITE_GLOB_APP_SHORT_NAME: string;
   // Upload url
   VITE_GLOB_UPLOAD_URL?: string;
-  VITE_GLOB_TENANT_TYPE?: string;
+  // 客户端ID
   VITE_GLOB_CLIENT_ID?: string;
+  // 客户端秘钥
   VITE_GLOB_CLIENT_SECRET?: string;
+  // 是否显示验证码
+  VITE_GLOB_SHOW_CAPTCHA?: string;
+  // 多租户模式
+  VITE_GLOB_MULTI_TENANT_TYPE?: string;
 }
