@@ -1,7 +1,9 @@
 <template>
   <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="headerImg" />
+      <Avatar :src="getAvatar" :size="26" :style="{ 'margin-right': '12px' }">
+        <Avatar :size="26">{{ getUserInfo?.name?.charAt(0) }}</Avatar></Avatar
+      >
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.name }}
@@ -35,8 +37,7 @@
 </template>
 <script lang="ts">
   // components
-  import { Dropdown, Menu } from 'ant-design-vue';
-
+  import { Dropdown, Menu, Avatar } from 'ant-design-vue';
   import { defineComponent, computed } from 'vue';
 
   import { DOC_URL } from '/@/settings/siteSetting';
@@ -47,7 +48,6 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useModal } from '/@/components/Modal';
 
-  import headerImg from '/@/assets/images/header.jpg';
   import { propTypes } from '/@/utils/propTypes';
   import { openWindow } from '/@/utils';
 
@@ -60,6 +60,7 @@
     components: {
       Dropdown,
       Menu,
+      Avatar,
       MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
       MenuDivider: Menu.Divider,
       LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
@@ -73,7 +74,7 @@
       const { getShowDoc } = useHeaderSetting();
 
       const getUserInfo = computed(() => {
-        return userStore.getUserInfoState || {};
+        return userStore.getUserInfoState;
       });
 
       const [register, { openModal }] = useModal();
@@ -106,13 +107,27 @@
         }
       }
 
+      const getAvatar = computed(() => {
+        const user = userStore.getUserInfoState;
+        if (!user['avatar']) {
+          // return require(`/@/assets/avatar/default.jpg`);
+        } else {
+          if (user['avatar'].startsWith('http://') || user['avatar'].startsWith('https://')) {
+            return user['avatar'];
+          } else {
+            // return require(`/@/assets/avatar/${user.avatar}`);
+          }
+        }
+        return user['avatar'];
+      });
+
       return {
         prefixCls,
         t,
         getUserInfo,
         handleMenuClick,
         getShowDoc,
-        headerImg,
+        getAvatar,
         register,
       };
     },
