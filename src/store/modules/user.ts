@@ -15,7 +15,6 @@ import { permissionStore } from '/@/store/modules/permission';
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
 import {
-  CacheTypeEnum,
   ROLES_KEY,
   TOKEN_KEY,
   REFRESH_TOKEN_KEY,
@@ -30,22 +29,14 @@ import router from '/@/router';
 
 import { loginApi, getUserInfoById, loadCaptcha, getPermCodeByUserId } from '/@/api/sys/user';
 
-import { Persistent, BasicKeys } from '/@/utils/cache/persistent';
+import { Persistent } from '/@/utils/cache/persistent';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
-import projectSetting from '/@/settings/projectSetting';
 
 export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
 const NAME = 'user';
 hotModuleUnregisterModule(NAME);
-
-function getCache<T>(key: BasicKeys) {
-  const { permissionCacheType } = projectSetting;
-  const fn =
-    permissionCacheType === CacheTypeEnum.LOCAL ? Persistent.getLocal : Persistent.getSession;
-  return fn(key) as T;
-}
 
 @Module({ namespaced: true, name: NAME, dynamic: true, store })
 class User extends VuexModule {
@@ -66,27 +57,29 @@ class User extends VuexModule {
   private roleListState: RoleEnum[] = [];
 
   get getUserInfoState(): UserInfo {
-    return this.userInfoState || getCache<UserInfo>(USER_INFO_KEY) || {};
+    return this.userInfoState || Persistent.getCache<UserInfo>(USER_INFO_KEY) || {};
   }
 
   get getTokenState(): string {
-    return this.tokenState || getCache<string>(TOKEN_KEY);
+    return this.tokenState || Persistent.getCache<string>(TOKEN_KEY);
   }
 
   get getRefreshTokenState(): string {
-    return this.refreshTokenState || getCache<string>(REFRESH_TOKEN_KEY);
+    return this.refreshTokenState || Persistent.getCache<string>(REFRESH_TOKEN_KEY);
   }
 
   get getExpireTimeState(): string {
-    return this.expireTimeState || getCache<string>(EXPIRE_TIME_KEY);
+    return this.expireTimeState || Persistent.getCache<string>(EXPIRE_TIME_KEY);
   }
 
   get getTenantState(): string {
-    return this.tenantState || getCache<string>(TENANT_KEY);
+    return this.tenantState || Persistent.getCache<string>(TENANT_KEY);
   }
 
   get getRoleListState(): RoleEnum[] {
-    return this.roleListState.length > 0 ? this.roleListState : getCache<RoleEnum[]>(ROLES_KEY);
+    return this.roleListState.length > 0
+      ? this.roleListState
+      : Persistent.getCache<RoleEnum[]>(ROLES_KEY);
   }
 
   @Mutation

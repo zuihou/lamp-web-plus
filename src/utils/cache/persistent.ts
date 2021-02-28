@@ -2,18 +2,30 @@ import { createLocalStorage, createSessionStorage } from '/@/utils/cache';
 import { Memory } from './memory';
 import {
   TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  TENANT_KEY,
+  PERM_CODE_KEY,
+  PERM_KEY,
+  EXPIRE_TIME_KEY,
   USER_INFO_KEY,
   ROLES_KEY,
   LOCK_INFO_KEY,
   PROJ_CFG_KEY,
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
+  CacheTypeEnum,
 } from '/@/enums/cacheEnum';
 import { DEFAULT_CACHE_TIME } from '/@/settings/encryptionSetting';
 import { toRaw } from 'vue';
+import projectSetting from '/@/settings/projectSetting';
 
 interface BasicStore {
   [TOKEN_KEY]: string | number | null | undefined;
+  [REFRESH_TOKEN_KEY]: string | number | null | undefined;
+  [TENANT_KEY]: string | number | null | undefined;
+  [PERM_CODE_KEY]: Recordable;
+  [PERM_KEY]: Recordable;
+  [EXPIRE_TIME_KEY]: string | number | null | undefined;
   [USER_INFO_KEY]: Recordable;
   [ROLES_KEY]: Recordable;
   [LOCK_INFO_KEY]: Recordable;
@@ -42,6 +54,13 @@ function initPersistentMemory() {
 }
 
 export class Persistent {
+  static getCache<T>(key: BasicKeys) {
+    const { permissionCacheType } = projectSetting;
+    const fn =
+      permissionCacheType === CacheTypeEnum.LOCAL ? Persistent.getLocal : Persistent.getSession;
+    return fn(key) as T;
+  }
+
   static getLocal<T>(key: LocalKeys) {
     return localMemory.get(key)?.value as Nullable<T>;
   }

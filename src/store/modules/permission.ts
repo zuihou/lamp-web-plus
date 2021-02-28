@@ -22,7 +22,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 import { GetAuthorityResourceByUserIdModel } from '/@/api/sys/model/userModel';
 import { PERM_CODE_KEY, PERM_KEY } from '/@/enums/cacheEnum';
-import { getCache, setCache } from '/@/utils/cache/persistent';
+import { Persistent } from '/@/utils/cache/persistent';
 
 const { createMessage } = useMessage();
 const NAME = 'permission';
@@ -46,11 +46,11 @@ class Permission extends VuexModule {
 
   get getPermCodeListState() {
     debugger;
-    return this.permCodeListState || getCache(PERM_CODE_KEY) || [];
+    return this.permCodeListState || Persistent.getCache(PERM_CODE_KEY) || [];
   }
 
   get getPermState() {
-    return this.permState || getCache(PERM_KEY) || {};
+    return this.permState || Persistent.getCache(PERM_KEY) || {};
   }
 
   get getBackMenuListState() {
@@ -68,13 +68,13 @@ class Permission extends VuexModule {
   @Mutation
   commitPermState(perm: GetAuthorityResourceByUserIdModel): void {
     this.permState = perm;
-    setCache(PERM_KEY, perm);
+    Persistent.setLocal(PERM_KEY, perm);
   }
 
   @Mutation
   commitPermCodeListState(codeList: string[]): void {
     this.permCodeListState = codeList;
-    setCache(PERM_CODE_KEY, codeList);
+    Persistent.setLocal(PERM_CODE_KEY, codeList);
   }
 
   @Mutation
