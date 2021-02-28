@@ -26,3 +26,4 @@ ignore:
   - dist
   - .local
   - .husky
+  - src/locales/lang

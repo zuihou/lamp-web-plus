@@ -15,6 +15,7 @@ import { permissionStore } from '/@/store/modules/permission';
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
 import {
+  CacheTypeEnum,
   ROLES_KEY,
   TOKEN_KEY,
   REFRESH_TOKEN_KEY,
@@ -29,14 +30,22 @@ import router from '/@/router';
 
 import { loginApi, getUserInfoById, loadCaptcha, getPermCodeByUserId } from '/@/api/sys/user';
 
-import { getCache, setCache } from '/@/utils/cache/persistent';
+import { Persistent, BasicKeys } from '/@/utils/cache/persistent';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
+import projectSetting from '/@/settings/projectSetting';
 
 export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
 const NAME = 'user';
 hotModuleUnregisterModule(NAME);
+
+function getCache<T>(key: BasicKeys) {
+  const { permissionCacheType } = projectSetting;
+  const fn =
+    permissionCacheType === CacheTypeEnum.LOCAL ? Persistent.getLocal : Persistent.getSession;
+  return fn(key) as T;
+}
 
 @Module({ namespaced: true, name: NAME, dynamic: true, store })
 class User extends VuexModule {
@@ -84,44 +93,43 @@ class User extends VuexModule {
   commitResetState(): void {
     this.userInfoState = null;
     this.tokenState = '';
-    this.tenantState = '';
     this.roleListState = [];
   }
 
   @Mutation
   commitUserInfoState(info: UserInfo): void {
     this.userInfoState = info;
-    setCache(USER_INFO_KEY, info);
+    Persistent.setLocal(USER_INFO_KEY, info);
   }
 
   @Mutation
   commitRoleListState(roleList: RoleEnum[]): void {
     this.roleListState = roleList;
-    setCache(ROLES_KEY, roleList);
+    Persistent.setLocal(ROLES_KEY, roleList);
   }
 
   @Mutation
   commitTokenState(info: string): void {
     this.tokenState = info;
-    setCache(TOKEN_KEY, info);
+    Persistent.setLocal(TOKEN_KEY, info);
   }
 
   @Mutation
   commitRefreshTokenState(info: string): void {
     this.refreshTokenState = info;
-    setCache(REFRESH_TOKEN_KEY, info);
+    Persistent.setLocal(REFRESH_TOKEN_KEY, info);
   }
 
   @Mutation
   commitExpireTimeState(info: string): void {
     this.expireTimeState = info;
-    setCache(EXPIRE_TIME_KEY, info);
+    Persistent.setLocal(EXPIRE_TIME_KEY, info);
   }
 
   @Mutation
   commitTenantState(info: string): void {
     this.tenantState = info;
-    setCache(TENANT_KEY, info);
+    Persistent.setLocal(TENANT_KEY, info);
   }
 
   /**

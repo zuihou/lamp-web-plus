@@ -1,5 +1,8 @@
 // token key
 export const TOKEN_KEY = 'TOKEN__';
+
+export const LOCALE_KEY = 'LOCALE__';
+
 // 刷新Token key
 export const REFRESH_TOKEN_KEY = 'REFRESH__TOKEN__';
 // 租户编码 key
@@ -24,10 +27,10 @@ export const PROJ_CFG_KEY = 'PROJ__CFG__KEY__';
 export const LOCK_INFO_KEY = 'LOCK__INFO__KEY__';
 
 // base global local key
-export const BASE_LOCAL_CACHE_KEY = 'LOCAL__CACHE__KEY__';
+export const APP_LOCAL_CACHE_KEY = 'COMMON__LOCAL__KEY__';
 
 // base global session key
-export const BASE_SESSION_CACHE_KEY = 'SESSION__CACHE__KEY__';
+export const APP_SESSION_CACHE_KEY = 'COMMON__SESSION__KEY__';
 
 export enum CacheTypeEnum {
   SESSION,
