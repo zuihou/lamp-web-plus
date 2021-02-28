@@ -1,60 +1,102 @@
-# 介绍
+# lamp 快速开发平台
 
-项目基于`vben-admin-thin-next`实现的 vue3 风格的后台管理系统，
+[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zuihou/lamp-cloud/blob/master/LICENSE) [![](https://img.shields.io/badge/作者-zuihou-orange.svg)](https://github.com/zuihou) [![](https://img.shields.io/badge/版本-3.0.0-brightgreen.svg)](https://github.com/zuihou/lamp-cloud) [![GitHub stars](https://img.shields.io/github/stars/zuihou/lamp-cloud.svg?style=social&label=Stars)](https://github.com/zuihou/lamp-cloud/stargazers) [![star](https://gitee.com/zuihou111/lamp-cloud/badge/star.svg?theme=white)](https://gitee.com/zuihou111/lamp-cloud/stargazers) [![GitHub forks](https://img.shields.io/github/forks/zuihou/lamp-cloud.svg?style=social&label=Fork)](https://github.com/zuihou/lamp-cloud/network/members) [![fork](https://gitee.com/zuihou111/lamp-cloud/badge/fork.svg?theme=white)](https://gitee.com/zuihou111/lamp-cloud/members)
 
-# 预安装
+# lamp 项目名字由来
 
-## 环境要求
+## 叙事版：
 
-- `Node.js`: - 版本最好大于 `12.0.0`
-- `yarn` > `npm` > `cnpm`: - 包管理工具.
+在一个夜黑风高的晚上，小孩吵着要出去玩，于是和`程序员老婆`一起带小孩出去放风，路上顺便讨论起项目要换个什么名字，在各自想出的名字都被对方一一否决后，大家陷入了沉思。走着走着，在一盏路灯下，孩砸盯着路灯打破宁静，喊出：灯灯～ 我和媳妇愣了一下，然后对视着一起说：哈哈，这个名字好～
 
-## 修改清单
+## 解释版：
 
-当你开始使用时，请按下面列表先行修改项目
+`灯灯`： 是我小孩学说话时会说的第一个词，也是我在想了很多项目名后，小孩一语点破的一个名字，灯灯象征着光明，给困境的我们带来希望，给加班夜归的程序员们指引前方～
 
-- [ ] 重命名 `package.json` 中的 `name` 字段
-- [ ] 在`LICENSE`中更改作者姓名
-- [ ] 在`public`中修改 `favicon.ico`
-- [ ] 在`public/resource/`和`/src/assets/images/logo.png`中修改 `logo.png`
-- [ ] 在`.env[xxx]`文件中修改相关项目配置
-- [ ] 在`src/settings/projectSetting.ts`内调整适合自己的项目风格
-- [ ] 项目默认启用角色来控制菜单，且后台请求菜单已被注释，如果需要使用后台动态生成路由。
-  - 请将`/src/store/modules/permission.ts`内的关于动态请求菜单的注释放开
-  - 请将`/src/utils/helper/routeHelper.ts`内的关于动态请求菜单的注释放开
+`灯灯`(简称灯， 英文名：lamp)，他是一个项目的统称，包含以下几个子项目
 
-## 注意
+## lamp 项目组成
 
-依赖删除了`echarts`,`apexcharts`,`zxcvbn`,`qrcode`,`xlsx`,`vditor`。但是组件及代码未删除。在你未引用到相关组件的时候，不会发出错误。当你需要使用的时候，只需要执行相应的命令安装对应模块即可
+| 项目 | gitee | github | 备注 |
+| --- | --- | --- | --- |
+| 工具集 | https://gitee.com/zuihou111/lamp-util | https://github.com/zuihou/lamp-util | 业务无关的工具集，cloud 和 boot 项目都依赖它 |
+| 微服务版(后端) | https://gitee.com/zuihou111/lamp-cloud | https://github.com/zuihou/lamp-cloud | SpringCloud 版 |
+| 单体版(后端) | https://gitee.com/zuihou111/lamp-boot | https://github.com/zuihou/lamp-boot | SpringBoot 版(和 lamp-cloud 功能基本一致) |
+| 租户后台(前端) | https://gitee.com/zuihou111/lamp-web | https://github.com/zuihou/lamp-web | PC 端管理系统 |
+| 租户后台(前端) | https://gitee.com/zuihou111/lamp-web-plus | https://github.com/zuihou/lamp-web-plus | PC 端管理系统（基于 vue-vben-admin） |
+| 代码生成器 | https://gitee.com/zuihou111/lamp-generator | https://github.com/zuihou/lamp-generator | 给开发人员使用 |
+| 定时调度器 | https://gitee.com/zuihou111/lamp-job | https://github.com/zuihou/lamp-job | 尚未开发 |
 
-需要用到哪个则执行对应命令
+# lamp-web 简介
 
-```js
+`lamp-web` 的前身是`zuihou-ui` + `zuihou-admin-ui`，从 3.0.0 版本开始，将 2 个系统合并为`lamp-web`，它是`lamp`项目的其中一员。原来在 zuihou-admin-ui 系统的功能已经合并到内置租户【0000】，账号【lamp_pt】中。
 
-yarn add echarts
+`lamp-web` 是 [lamp-cloud](https://github.com/zuihou/lamp-cloud) 和 [lamp-boot](https://github.com/zuihou/lamp-boot) 2 个后台项目共用的管理后台，仅需在启动时调整`vue.config.js`文件中的代理。它基于[vue element admin](https://panjiachen.github.io/vue-element-admin-site/zh/)构建。
 
-yarn add apexcharts
+## lamp 会员版项目演示地址
 
-yarn add zxcvbn
+- 地址： http://tangyh.top:3100
+- 以下内置账号仅限于内置的 0000 租户
+- 平台管理员： lamp_pt/lamp (内置给公司内部运营人员使用)
+- 超级管理员： lamp/lamp
+- 普通管理员： general/lamp
+- 普通账号： normal/lamp
 
-yarn add qrcode
+> ps: 演示环境中内置租户没有写入权限，若要在演示环境测试增删改，请使用 lamp_pt 账号查询租户管理员账号后,登录新租户测试
 
-yarn add vditor
+## lamp-cloud/lamp-boot + lamp-web-plus 功能介绍：
 
-yarn add xlsx
+1. 租户管理：运营人员管理所有的租户创建
+2. 工作台：普通用户常用功能
+3. 组织管理：组织、岗位、用户数据维护、重置用户密码等
+4. 资源中心：消息、短信、附件管理
+5. 流程管理：流程部署、模型管理、流程示例
+6. 系统设置：菜单、资源配置、角色管理、给角色绑定用户、给角色授权菜单和资源、字典、地区、系统参数、操作日志、登录日志、应用管理等
+7. 网关设置：限流和阻止访问
+8. 开发者管理：定时任务、接口文档、注册&配置中心、服务监控、数据库监控、zipkin 监控、SkyWalking 监控
+
+## 技术栈
+
+- Vue 3.x
+- vuex 4.x
+- typescript 4.x
+- ant-design-vue 2.x
+- axios 0.21.x
+- echarts 5.x
+- vite 2.x
+
+## 安装
+
+### 环境要求
+
+- `Node.js`: - 版本大于 `12.0.0`
+- `yarn` : - 包管理工具.
+
+### 下载
 
 ```
+//  使git对文件名大小写敏感
+git config core.ignorecase false
 
-## 开发环境
+// 拉取项目代码
+
+git clone https://github.com/zuihou/lamp-web-plus.git
+
+cd lamp-web-plus
+
+// 如果使用别的包管理工具，可以自行安装
+// 如果未安装yarn，请运行：npm install -g yarn
+yarn install
+```
+
+## 使用
+
+### 开发环境
 
 ```bash
-## 不能指定淘宝源！
-yarn install
-
 yarn serve
 ```
 
-## 打包
+### 打包
 
 ```bash
 
@@ -65,7 +107,7 @@ yarn build:no-cache # 打包，执行之前会先删除缓存
 yarn report # 生成构建包报表预览
 ```
 
-## 格式化
+### 格式化
 
 ```bash
 yarn lint:stylelint # 样式格式化
@@ -73,7 +115,7 @@ yarn lint:stylelint # 样式格式化
 yarn lint:prettier # js/ts代码格式化
 ```
 
-## 其他
+### 其他
 
 ```bash
 yarn reinstall # 删除依赖重新装，兼容window
@@ -87,14 +129,39 @@ yarn clean:cache # 删除缓存
 yarn clean:lib # 删除node_modules，兼容window系统
 ```
 
-# 浏览器支持
+# 交流群，加群前请先给项目点个 "Star"，谢谢！😘
 
-本地开发推荐使用`Chrome`浏览器,在火狐浏览器进行开发相对卡顿。
+- 63202894(主群 满员请加群 2)
+- 1011148503(群 2)
 
-支持现代浏览器, IE 暂不支持，后续考虑支持 ie11
+# 如果觉得本项目对您有任何一点帮助，请点右上角 "Star" 支持一下， 并向您的基友、同事们宣传一下吧，谢谢！
 
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| :-: | :-: | :-: | :-: | :-: |
-| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+# 详细文档: https://www.kancloud.cn/zuihou/zuihou-admin-cloud
 
-更多浏览器可以查看 [Can I Use Es Module](https://caniuse.com/?search=ES%20Module)
+    ps: gitee捐献 或者 二维码打赏(本页最下方)： 45元及以上 并 备注邮箱，可得开发文档一份(支持后续更新)
+        打赏或者捐献后直接加群：1039545140 并备注打赏时填写的邮箱，可以持续的获取最新的文档。
+
+# 遇到问题请先查看历史 issue，未找到解决方案，在提交 issue(问题描述详细一些，报错截图大一些，复现步骤全一些)
+
+    https://github.com/zuihou/lamp-cloud/issues
+
+# 项目不错，支持一下吧
+
+![扫码支持.png](image/捐赠.png)
+
+# 感谢 JetBrains 提供的免费开源 License：
+
+[![JetBrains](image/jetbrains.png)](https://www.jetbrains.com/?from=lamp-cloud)
+
+# 友情链接 & 特别鸣谢
+
+- 微服务快速开发平台：[https://github.com/zuihou/lamp-cloud](https://github.com/zuihou/lamp-cloud)
+- 单体快速开发平台：[https://github.com/zuihou/lamp-boot](https://github.com/zuihou/lamp-boot)
+- MyBatis-Plus：[https://mybatis.plus/](https://mybatis.plus/)
+- knife4j：[http://doc.xiaominfo.com/](http://doc.xiaominfo.com/)
+- hutool：[https://hutool.cn/](https://hutool.cn/)
+- xxl-job：[http://www.xuxueli.com/xxl-job/](http://www.xuxueli.com/xxl-job/)
+- kkfileview：[https://kkfileview.keking.cn](https://kkfileview.keking.cn)
+- vue-vben-admin： [https://github.com/anncwb/vue-vben-admin](https://github.com/anncwb/vue-vben-admin) lamp-web-plus 基于本项目改造
+- FEBS Cloud Web： [https://gitee.com/mrbirdd/FEBS-Cloud-Web](https://gitee.com/mrbirdd/FEBS-Cloud-Web) lamp-web 基于本项目改造， 感谢 [wuyouzhuguli](https://github.com/wuyouzhuguli)
+- Cloud-Platform： [https://gitee.com/geek_qi/cloud-platform](https://gitee.com/geek_qi/cloud-platform) 作者学习时接触到的第一个微服务项目
