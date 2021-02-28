@@ -13,6 +13,15 @@ export interface LoginParams {
 }
 
 /**
+ * @description: Logout interface parameters
+ */
+export interface LogoutParams {
+  token: string;
+  userId: string | number;
+  clientId: string;
+}
+
+/**
  * @description: 获取验证码
  */
 export interface GetCaptchaByKeyParams {

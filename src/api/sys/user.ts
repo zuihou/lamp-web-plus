@@ -1,6 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import {
   LoginParams,
+  LogoutParams,
   LoginResultModel,
   GetUserInfoByUserIdParams,
   GetUserInfoByUserIdModel,
@@ -13,6 +14,7 @@ enum Api {
   GetUserInfoById = '/getUserInfoById',
   GetPermCodeByUserId = '/oauth/resource/visible',
   Login = '/oauth/noToken/login',
+  Logout = '/oauth/noToken/logout',
   LoadCaptcha = '/oauth/anno/captcha',
 }
 
@@ -34,6 +36,19 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
       errorMessageMode: mode,
     }
   );
+}
+
+/**
+ * @description: user logout api
+ */
+export function logout(params: LogoutParams) {
+  return defHttp.post<boolean>({
+    url: Api.Logout,
+    params,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+  });
 }
 
 /**

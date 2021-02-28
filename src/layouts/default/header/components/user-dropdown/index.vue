@@ -4,7 +4,7 @@
       <img :class="`${prefixCls}__header`" :src="headerImg" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
-          {{ getUserInfo.realName }}
+          {{ getUserInfo.name }}
         </span>
       </span>
     </span>
@@ -73,8 +73,7 @@
       const { getShowDoc } = useHeaderSetting();
 
       const getUserInfo = computed(() => {
-        const { realName = '', desc } = userStore.getUserInfoState || {};
-        return { realName, desc };
+        return userStore.getUserInfoState || {};
       });
 
       const [register, { openModal }] = useModal();

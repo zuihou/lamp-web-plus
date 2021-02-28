@@ -1,5 +1,6 @@
 import type {
   LoginParams,
+  LogoutParams,
   GetUserInfoByUserIdModel,
   GetUserInfoByUserIdParams,
   GetAuthorityResourceByUserIdParams,
@@ -28,9 +29,16 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 import router from '/@/router';
 
-import { loginApi, getUserInfoById, loadCaptcha, getPermCodeByUserId } from '/@/api/sys/user';
+import {
+  loginApi,
+  logout,
+  getUserInfoById,
+  loadCaptcha,
+  getPermCodeByUserId,
+} from '/@/api/sys/user';
 
 import { Persistent, BasicKeys } from '/@/utils/cache/persistent';
+import { useGlobSetting } from '/@/hooks/setting';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 import projectSetting from '/@/settings/projectSetting';
@@ -39,6 +47,7 @@ export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
 const { permissionCacheType } = projectSetting;
 const isLocal = permissionCacheType === CacheTypeEnum.LOCAL;
+const globSetting = useGlobSetting();
 
 const NAME = 'app-user';
 hotModuleUnregisterModule(NAME);
@@ -232,7 +241,14 @@ class User extends VuexModule {
    */
   @Action
   async logout(goLogin = false) {
-    goLogin && router.push(PageEnum.BASE_LOGIN);
+    const param: LogoutParams = {
+      token: this.getTokenState,
+      userId: this.getUserInfoState?.id,
+      clientId: globSetting.clientId,
+    };
+    await logout(param).finally(() => {
+      goLogin && router.push(PageEnum.BASE_LOGIN);
+    });
   }
 
   /**
