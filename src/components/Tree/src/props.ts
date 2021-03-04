@@ -1,14 +1,33 @@
-import { PropType } from 'vue';
-import type { ReplaceFields, TreeItem, ActionItem, Keys, CheckKeys } from './types';
+import type { PropType } from 'vue';
+import type { ReplaceFields, ActionItem, Keys, CheckKeys } from './types';
 import type { ContextMenuItem } from '/@/hooks/web/useContextMenu';
+import type { TreeDataItem } from 'ant-design-vue/es/tree/Tree';
+import { propTypes } from '/@/utils/propTypes';
 
 export const basicProps = {
+  value: {
+    type: Array as PropType<Keys>,
+  },
+  renderIcon: {
+    type: Function as PropType<(params: Recordable) => string>,
+  },
+
+  helpMessage: {
+    type: [String, Array] as PropType<string | string[]>,
+    default: '',
+  },
+
+  title: propTypes.string,
+  toolbar: propTypes.bool,
+  search: propTypes.bool,
+  checkStrictly: propTypes.bool,
+
   replaceFields: {
     type: Object as PropType<ReplaceFields>,
   },
 
   treeData: {
-    type: Array as PropType<TreeItem[]>,
+    type: Array as PropType<TreeDataItem[]>,
   },
 
   actionList: {
@@ -50,7 +69,7 @@ export const treeNodeProps = {
     type: Object as PropType<ReplaceFields>,
   },
   treeData: {
-    type: Array as PropType<TreeItem[]>,
+    type: Array as PropType<TreeDataItem[]>,
     default: () => [],
   },
 };

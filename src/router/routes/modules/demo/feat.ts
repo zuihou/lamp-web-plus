@@ -9,7 +9,7 @@ const feat: AppRouteModule = {
   component: LAYOUT,
   redirect: '/feat/icon',
   meta: {
-    icon: 'ic:outline-featured-play-list',
+    icon: 'ion:git-compare-outline',
     title: t('routes.demo.feat.feat'),
   },
   children: [
@@ -19,6 +19,14 @@ const feat: AppRouteModule = {
       component: () => import('/@/views/demo/feat/icon/index.vue'),
       meta: {
         title: t('routes.demo.feat.icon'),
+      },
+    },
+    {
+      path: 'ws',
+      name: 'WebSocket',
+      component: () => import('/@/views/demo/feat/ws/index.vue'),
+      meta: {
+        title: t('routes.demo.feat.ws'),
       },
     },
     {
