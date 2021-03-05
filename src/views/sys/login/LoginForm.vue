@@ -122,6 +122,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useKeyPress } from '/@/hooks/event/useKeyPress';
   import { KeyCodeEnum } from '/@/enums/keyCodeEnum';
+  import { randomNum } from '/@/utils';
 
   export default defineComponent({
     name: 'LoginForm',

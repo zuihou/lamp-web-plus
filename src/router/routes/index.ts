@@ -54,7 +54,7 @@ export const ConstRouter: AppRouteRecordRaw[] = [
       {
         path: 'welcome',
         name: 'Welcome',
-        component: () => import('/@/views/dashboard/welcome/index.vue'),
+        component: () => import('/@/views/lamp/welcome/index.vue'),
         meta: {
           title: t('routes.dashboard.welcome'),
           affix: true,
