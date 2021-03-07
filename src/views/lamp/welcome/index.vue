@@ -118,18 +118,18 @@
           dateArr.push(time);
         }
 
-        visitBar.legend.data = ['您', '总数'];
+        visitBar.legend.data = ['我的', '总的'];
         visitBar.xAxis.data = dateArr;
         visitBar.series.push({
-          name: '您',
-          type: 'line',
+          name: '我的',
+          type: 'bar',
           barWidth: '25%',
           color: 'rgb(0, 227, 150)',
           data: tenUserVisitCount,
         });
         visitBar.series.push({
-          name: '总数',
-          type: 'bar',
+          name: '总的',
+          type: 'line',
           barWidth: '25%',
           color: 'rgb(0, 143, 251)',
           data: tenVisitCount,
