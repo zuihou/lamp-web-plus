@@ -53,7 +53,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
 
     build: {
-      cssCodeSplit: false,
       // minify: 'esbuild',
       outDir: OUTPUT_DIR,
       polyfillDynamicImport: VITE_LEGACY,

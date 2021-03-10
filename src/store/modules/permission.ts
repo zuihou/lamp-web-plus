@@ -18,7 +18,7 @@ import { transformObjToRoute } from '/@/router/helper/routeHelper';
 import { transformRouteToMenu } from '/@/router/helper/menuHelper';
 
 import { useMessage } from '/@/hooks/web/useMessage';
-// import { useI18n } from '/@/hooks/web/useI18n';
+import { useI18n } from '/@/hooks/web/useI18n';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 import { ConstRouter } from '/@/router/routes/index';
 import { GetAuthorityResourceByUserIdModel } from '/@/api/sys/model/userModel';
@@ -103,7 +103,7 @@ class Permission extends VuexModule {
 
   @Action
   async buildRoutesAction(id?: number | string): Promise<AppRouteRecordRaw[]> {
-    // const { t } = useI18n();
+    const { t } = useI18n();
     let routes: AppRouteRecordRaw[] = [];
     const roleList = toRaw(userStore.getRoleListState) || [];
 
@@ -120,8 +120,7 @@ class Permission extends VuexModule {
       //  如果确定不需要做后台动态权限,请将下面整个判断注释
     } else if (permissionMode === PermissionModeEnum.BACK) {
       createMessage.loading({
-        content: 'Loading menu...',
-        // content: 't('sys.app.menuLoading')',
+        content: t('sys.app.menuLoading'),
         duration: 1,
       });
       // 这里获取后台路由菜单逻辑自行修改

@@ -7,6 +7,7 @@ import type {
   GetCaptchaByKeyParams,
 } from '/@/api/sys/model/userModel';
 import { Base64 } from 'js-base64';
+import type { UserInfo } from '/@/store/types';
 
 import store from '/@/store/index';
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
@@ -37,30 +38,12 @@ import {
   getPermCodeByUserId,
 } from '/@/api/sys/user';
 
-import { Persistent, BasicKeys } from '/@/utils/cache/persistent';
-import { useGlobSetting } from '/@/hooks/setting';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
-import projectSetting from '/@/settings/projectSetting';
-
-export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
-
-const { permissionCacheType } = projectSetting;
-const isLocal = permissionCacheType === CacheTypeEnum.LOCAL;
-const globSetting = useGlobSetting();
+import { getAuthCache, setAuthCache } from '/@/utils/auth/index';
 
 const NAME = 'app-user';
 hotModuleUnregisterModule(NAME);
-
-function getCache<T>(key: BasicKeys) {
-  const fn = isLocal ? Persistent.getLocal : Persistent.getSession;
-  return fn(key) as T;
-}
-
-function setCache(key: BasicKeys, value) {
-  const fn = isLocal ? Persistent.setLocal : Persistent.setSession;
-  return fn(key, value);
-}
 
 @Module({ namespaced: true, name: NAME, dynamic: true, store })
 class User extends VuexModule {
@@ -81,27 +64,27 @@ class User extends VuexModule {
   private roleListState: RoleEnum[] = [];
 
   get getUserInfoState(): UserInfo {
-    return this.userInfoState || getCache<UserInfo>(USER_INFO_KEY) || {};
+    return this.userInfoState || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
   }
 
   get getTokenState(): string {
-    return this.tokenState || getCache<string>(TOKEN_KEY);
+    return this.tokenState || getAuthCache<string>(TOKEN_KEY);
   }
 
   get getRefreshTokenState(): string {
-    return this.refreshTokenState || getCache<string>(REFRESH_TOKEN_KEY);
+    return this.refreshTokenState || getAuthCache<string>(REFRESH_TOKEN_KEY);
   }
 
   get getExpireTimeState(): string {
-    return this.expireTimeState || getCache<string>(EXPIRE_TIME_KEY);
+    return this.expireTimeState || getAuthCache<string>(EXPIRE_TIME_KEY);
   }
 
   get getTenantState(): string {
-    return this.tenantState || getCache<string>(TENANT_KEY);
+    return this.tenantState || getAuthCache<string>(TENANT_KEY);
   }
 
   get getRoleListState(): RoleEnum[] {
-    return this.roleListState.length > 0 ? this.roleListState : getCache<RoleEnum[]>(ROLES_KEY);
+    return this.roleListState.length > 0 ? this.roleListState : getAuthCache<RoleEnum[]>(ROLES_KEY);
   }
 
   @Mutation
@@ -114,37 +97,37 @@ class User extends VuexModule {
   @Mutation
   commitUserInfoState(info: UserInfo): void {
     this.userInfoState = info;
-    setCache(USER_INFO_KEY, info);
+    setAuthCache(USER_INFO_KEY, info);
   }
 
   @Mutation
   commitRoleListState(roleList: RoleEnum[]): void {
     this.roleListState = roleList;
-    setCache(ROLES_KEY, roleList);
+    setAuthCache(ROLES_KEY, roleList);
   }
 
   @Mutation
   commitTokenState(info: string): void {
     this.tokenState = info;
-    setCache(TOKEN_KEY, info);
+    setAuthCache(TOKEN_KEY, info);
   }
 
   @Mutation
   commitRefreshTokenState(info: string): void {
     this.refreshTokenState = info;
-    setCache(REFRESH_TOKEN_KEY, info);
+    setAuthCache(REFRESH_TOKEN_KEY, info);
   }
 
   @Mutation
   commitExpireTimeState(info: string): void {
     this.expireTimeState = info;
-    setCache(EXPIRE_TIME_KEY, info);
+    setAuthCache(EXPIRE_TIME_KEY, info);
   }
 
   @Mutation
   commitTenantState(info: string): void {
     this.tenantState = info;
-    setCache(TENANT_KEY, info);
+    setAuthCache(TENANT_KEY, info);
   }
 
   /**
