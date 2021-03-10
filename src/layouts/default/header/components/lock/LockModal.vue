@@ -8,7 +8,9 @@
   >
     <div :class="`${prefixCls}__entry`">
       <div :class="`${prefixCls}__header`">
-        <img :src="headerImg" :class="`${prefixCls}__header-img`" />
+        <Avatar :src="getAvatar" :size="70">
+          <Avatar :size="70">{{ getRealName?.charAt(0) }}</Avatar></Avatar
+        >
         <p :class="`${prefixCls}__header-name`">
           {{ getRealName }}
         </p>
@@ -26,6 +28,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, computed } from 'vue';
+  import { Avatar } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { BasicModal, useModalInner } from '/@/components/Modal/index';
@@ -36,14 +39,14 @@
   import headerImg from '/@/assets/images/header.jpg';
   export default defineComponent({
     name: 'LockModal',
-    components: { BasicModal, BasicForm },
+    components: { BasicModal, BasicForm, Avatar },
 
     setup() {
       const { t } = useI18n();
       const { prefixCls } = useDesign('header-lock-modal');
 
       const getRealName = computed(() => {
-        return userStore.getUserInfoState?.realName;
+        return userStore.getUserInfoState?.name;
       });
       const [register, { closeModal }] = useModalInner();
 
@@ -71,8 +74,23 @@
         await resetFields();
       }
 
+      const getAvatar = computed(() => {
+        const user = userStore.getUserInfoState;
+        if (!user['avatar']) {
+          // return require(`/@/assets/avatar/default.jpg`);
+        } else {
+          if (user['avatar'].startsWith('http://') || user['avatar'].startsWith('https://')) {
+            return user['avatar'];
+          } else {
+            // return require(`/@/assets/avatar/${user.avatar}`);
+          }
+        }
+        return user['avatar'];
+      });
+
       return {
         t,
+        getAvatar,
         prefixCls,
         getRealName,
         register,

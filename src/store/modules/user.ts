@@ -12,12 +12,12 @@ import type { UserInfo } from '/@/store/types';
 import store from '/@/store/index';
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
 import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
+import { useGlobSetting } from '/@/hooks/setting';
 
 import { permissionStore } from '/@/store/modules/permission';
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
 import {
-  CacheTypeEnum,
   ROLES_KEY,
   TOKEN_KEY,
   REFRESH_TOKEN_KEY,
@@ -42,6 +42,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 import { getAuthCache, setAuthCache } from '/@/utils/auth/index';
 
+const globSetting = useGlobSetting();
 const NAME = 'app-user';
 hotModuleUnregisterModule(NAME);
 
