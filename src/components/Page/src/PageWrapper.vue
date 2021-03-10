@@ -18,7 +18,7 @@
       </template>
     </PageHeader>
     <div
-      class="m-4 overflow-hidden"
+      class="overflow-hidden"
       :class="[`${prefixCls}-content`, contentClass]"
       :style="getContentStyle"
     >
@@ -66,7 +66,7 @@
       const headerRef = ref<ComponentRef>(null);
       const footerRef = ref<ComponentRef>(null);
       const footerHeight = ref(0);
-      const { prefixCls } = useDesign('page-wrapper');
+      const { prefixCls, prefixVar } = useDesign('page-wrapper');
       const { contentHeight, setPageHeight, pageHeight } = usePageContext();
 
       const getClass = computed(() => {
@@ -109,6 +109,7 @@
             return;
           }
           nextTick(() => {
+            //fix:in contentHeight mode: delay getting footer and header dom element to get the correct height
             const footer = unref(footerRef);
             const header = unref(headerRef);
             footerHeight.value = 0;
@@ -122,11 +123,26 @@
             if (headerEl) {
               headerHeight += headerEl?.offsetHeight ?? 0;
             }
-
-            setPageHeight?.(unref(contentHeight) - unref(footerHeight) - headerHeight);
+            // fix:subtract content's marginTop and marginBottom value
+            let subtractHeight = 0;
+            const { marginBottom, marginTop } = getComputedStyle(
+              document.querySelectorAll(`.${prefixVar}-page-wrapper-content`)?.[0]
+            );
+            if (marginBottom) {
+              const contentMarginBottom = Number(marginBottom.replace(/[^\d]/g, ''));
+              subtractHeight += contentMarginBottom;
+            }
+            if (marginTop) {
+              const contentMarginTop = Number(marginTop.replace(/[^\d]/g, ''));
+              subtractHeight += contentMarginTop;
+            }
+            setPageHeight?.(
+              unref(contentHeight) - unref(footerHeight) - headerHeight - subtractHeight
+            );
           });
         },
         {
+          flush: 'post',
           immediate: true,
         }
       );
@@ -150,6 +166,10 @@
 
   .@{prefix-cls} {
     position: relative;
+
+    .@{prefix-cls}-content {
+      margin: 16px 16px 0 16px;
+    }
 
     .ant-page-header {
       &:empty {

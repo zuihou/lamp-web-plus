@@ -14,14 +14,15 @@ export function useTableScroll(
   propsRef: ComputedRef<BasicTableProps>,
   tableElRef: Ref<ComponentRef>,
   columnsRef: ComputedRef<BasicColumn[]>,
-  rowSelectionRef: ComputedRef<TableRowSelection<any> | null>
+  rowSelectionRef: ComputedRef<TableRowSelection<any> | null>,
+  getDataSourceRef: ComputedRef<Recordable[]>
 ) {
   const tableHeightRef: Ref<Nullable<number>> = ref(null);
 
   const modalFn = useModalContext();
 
-  // const [debounceCalcTableHeight] = useDebounce(calcTableHeight, 80);
-  const [debounceRedoHeight] = useDebounce(redoHeight, 250);
+  //320  Greater than animation time 280
+  const [debounceRedoHeight] = useDebounce(redoHeight, 300);
 
   const getCanResize = computed(() => {
     const { canResize, scroll } = unref(propsRef);
@@ -34,6 +35,7 @@ export function useTableScroll(
       debounceRedoHeight();
     },
     {
+      flush: 'post',
       immediate: true,
     }
   );
@@ -59,15 +61,17 @@ export function useTableScroll(
 
   async function calcTableHeight() {
     const { resizeHeightOffset, pagination, maxHeight } = unref(propsRef);
-    if (!unref(getCanResize)) return;
+    const tableData = unref(getDataSourceRef);
+
+    if (!unref(getCanResize) || tableData.length === 0) return;
 
     await nextTick();
+    //Add a delay to get the correct bottomIncludeBody paginationHeight footerHeight headerHeight
     const table = unref(tableElRef);
     if (!table) return;
 
     const tableEl: Element = table.$el;
     if (!tableEl) return;
-
     const headEl = tableEl.querySelector('.ant-table-thead ');
 
     if (!headEl) return;
@@ -123,10 +127,11 @@ export function useTableScroll(
     if (!bodyEl) {
       bodyEl = tableEl.querySelector('.ant-table-body');
     }
+
     bodyEl!.style.height = `${height}px`;
   }
 
-  useWindowSizeFn(calcTableHeight, 200);
+  useWindowSizeFn(calcTableHeight, 280);
 
   const getScrollX = computed(() => {
     let width = 0;
