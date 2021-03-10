@@ -47,7 +47,7 @@ function dynamicImport(
   const matchKeys = keys.filter((key) => {
     let k = key.replace('../../views', '');
     const lastIndex = k.lastIndexOf('.');
-    k = k.substring(0, lastIndex);
+    k = k.substring(1, lastIndex);
     return k === component;
   });
   if (matchKeys?.length === 1) {
