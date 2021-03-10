@@ -1,6 +1,6 @@
 # lamp 快速开发平台
 
-[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zuihou/lamp-cloud/blob/master/LICENSE) [![](https://img.shields.io/badge/作者-zuihou-orange.svg)](https://github.com/zuihou) [![](https://img.shields.io/badge/版本-3.0.0-brightgreen.svg)](https://github.com/zuihou/lamp-cloud) [![GitHub stars](https://img.shields.io/github/stars/zuihou/lamp-cloud.svg?style=social&label=Stars)](https://github.com/zuihou/lamp-cloud/stargazers) [![star](https://gitee.com/zuihou111/lamp-cloud/badge/star.svg?theme=white)](https://gitee.com/zuihou111/lamp-cloud/stargazers) [![GitHub forks](https://img.shields.io/github/forks/zuihou/lamp-cloud.svg?style=social&label=Fork)](https://github.com/zuihou/lamp-cloud/network/members) [![fork](https://gitee.com/zuihou111/lamp-cloud/badge/fork.svg?theme=white)](https://gitee.com/zuihou111/lamp-cloud/members)
+[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zuihou/lamp-cloud/blob/master/LICENSE) [![](https://img.shields.io/badge/作者-zuihou-orange.svg)](https://github.com/zuihou) [![](https://img.shields.io/badge/版本-3.1.1-brightgreen.svg)](https://github.com/zuihou/lamp-cloud) [![GitHub stars](https://img.shields.io/github/stars/zuihou/lamp-cloud.svg?style=social&label=Stars)](https://github.com/zuihou/lamp-cloud/stargazers) [![star](https://gitee.com/zuihou111/lamp-cloud/badge/star.svg?theme=white)](https://gitee.com/zuihou111/lamp-cloud/stargazers) [![GitHub forks](https://img.shields.io/github/forks/zuihou/lamp-cloud.svg?style=social&label=Fork)](https://github.com/zuihou/lamp-cloud/network/members) [![fork](https://gitee.com/zuihou111/lamp-cloud/badge/fork.svg?theme=white)](https://gitee.com/zuihou111/lamp-cloud/members)
 
 # lamp 项目名字由来
 
@@ -16,15 +16,28 @@
 
 ## lamp 项目组成
 
+### 工具集
+
 | 项目 | gitee | github | 备注 |
 | --- | --- | --- | --- |
 | 工具集 | https://gitee.com/zuihou111/lamp-util | https://github.com/zuihou/lamp-util | 业务无关的工具集，cloud 和 boot 项目都依赖它 |
-| 微服务版(后端) | https://gitee.com/zuihou111/lamp-cloud | https://github.com/zuihou/lamp-cloud | SpringCloud 版 |
-| 单体版(后端) | https://gitee.com/zuihou111/lamp-boot | https://github.com/zuihou/lamp-boot | SpringBoot 版(和 lamp-cloud 功能基本一致) |
-| 租户后台(前端) | https://gitee.com/zuihou111/lamp-web | https://github.com/zuihou/lamp-web | PC 端管理系统 |
-| 租户后台(前端) | https://gitee.com/zuihou111/lamp-web-plus | https://github.com/zuihou/lamp-web-plus | PC 端管理系统（基于 vue-vben-admin） |
 | 代码生成器 | https://gitee.com/zuihou111/lamp-generator | https://github.com/zuihou/lamp-generator | 给开发人员使用 |
 | 定时调度器 | https://gitee.com/zuihou111/lamp-job | https://github.com/zuihou/lamp-job | 尚未开发 |
+
+### 后端
+
+| 项目 | gitee | github | 备注 |
+| --- | --- | --- | --- |
+| 微服务版(后端) | https://gitee.com/zuihou111/lamp-cloud | https://github.com/zuihou/lamp-cloud | SpringCloud 版 |
+| 单体版(后端) | https://gitee.com/zuihou111/lamp-boot | https://github.com/zuihou/lamp-boot | SpringBoot 版(和 lamp-cloud 功能基本一致) |
+
+### 前端
+
+| 项目 | gitee | github | 备注 | 演示地址 |
+| --- | --- | --- | --- | --- |
+| 中后台管理系统 | https://gitee.com/zuihou111/lamp-web | https://github.com/zuihou/lamp-web | 基于 vue-admin-element | http://tangyh.top:10000 |
+| 中后台管理系统 | https://gitee.com/zuihou111/lamp-web-beautiful | https://github.com/zuihou/lamp-web-beautiful | 基于 vue-admin-beautiful | http://tangyh.top:180 |
+| 中后台管理系统 (特别推荐！👏👏👏) | https://gitee.com/zuihou111/lamp-web-plus | https://github.com/zuihou/lamp-web-plus | 基于 vue-vben-admin （vue 3 + vite 2） | http://tangyh.top:3100 |
 
 # lamp-web 简介
 
@@ -144,14 +157,6 @@ yarn clean:lib # 删除node_modules，兼容window系统
 # 遇到问题请先查看历史 issue，未找到解决方案，在提交 issue(问题描述详细一些，报错截图大一些，复现步骤全一些)
 
     https://github.com/zuihou/lamp-cloud/issues
-
-# 项目不错，支持一下吧
-
-![扫码支持.png](image/捐赠.png)
-
-# 感谢 JetBrains 提供的免费开源 License：
-
-[![JetBrains](image/jetbrains.png)](https://www.jetbrains.com/?from=lamp-cloud)
 
 # 友情链接 & 特别鸣谢
 
