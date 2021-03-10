@@ -37,7 +37,7 @@
 | --- | --- | --- | --- | --- |
 | 中后台管理系统 | https://gitee.com/zuihou111/lamp-web | https://github.com/zuihou/lamp-web | 基于 vue-admin-element | http://tangyh.top:10000 |
 | 中后台管理系统 | https://gitee.com/zuihou111/lamp-web-beautiful | https://github.com/zuihou/lamp-web-beautiful | 基于 vue-admin-beautiful | http://tangyh.top:180 |
-| 中后台管理系统 (特别推荐！👏👏👏) | https://gitee.com/zuihou111/lamp-web-plus | https://github.com/zuihou/lamp-web-plus | 基于 vue-vben-admin （vue 3 + vite 2） | http://tangyh.top:3100 |
+| 中后台管理系统 (强烈推荐！👏👏👏) | https://gitee.com/zuihou111/lamp-web-plus | https://github.com/zuihou/lamp-web-plus | 基于 vue-vben-admin （vue 3 + vite 2） | http://tangyh.top:3100 |
 
 # lamp-web 简介
 
