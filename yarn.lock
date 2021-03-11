@@ -1785,10 +1785,10 @@
   dependencies:
     vue-demi latest
 
-"@windicss/plugin-utils@0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.7.1.tgz#001ba282b78a9d4e110e531d59309d2b9cb0929e"
-  integrity sha512-ZloIRRKCnArFyDNuhZiFRA15XqhlWaeTcOf3soP9VxWJ+i6/IkH6cnaYgBefDATA/zJodOPsXBnbX333zKVk1Q==
+"@windicss/plugin-utils@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.7.2.tgz#c43c89a2f51110eb6f49da565dc235fb2af30269"
+  integrity sha512-4znRERKhhStIOFy1/eB0rJXnXs+NyumBREjh0GZVMoHVmUB9up08tNUpbbq3tlJC96t27VsD4vdfv00T+It/IA==
   dependencies:
     esbuild "^0.8.57"
     esbuild-register "^2.2.0"
@@ -7131,10 +7131,10 @@ postcss@^8.1.10, postcss@^8.2.1:
     nanoid "^3.1.20"
     source-map "^0.6.1"
 
-postcss@^8.2.7:
-  version "8.2.7"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.2.7.tgz#48ed8d88b4de10afa0dfd1c3f840aa57b55c4d47"
-  integrity sha512-DsVLH3xJzut+VT+rYr0mtvOtpTjSyqDwPf5EZWXcb0uAKfitGpTY9Ec+afi2+TgdN8rWS9Cs88UDYehKo/RvOw==
+postcss@^8.2.8:
+  version "8.2.8"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.2.8.tgz#0b90f9382efda424c4f0f69a2ead6f6830d08ece"
+  integrity sha512-1F0Xb2T21xET7oQV9eKuctbM9S7BC0fetoHCc4H13z0PT6haiRLP4T0ZY4XWh7iLP0usgqykT6p9B2RtOf4FPw==
   dependencies:
     colorette "^1.2.2"
     nanoid "^3.1.20"
@@ -9117,10 +9117,10 @@ vite-plugin-imagemin@^0.2.9:
     imagemin-svgo "^8.0.0"
     imagemin-webp "^6.0.0"
 
-vite-plugin-mock@^2.2.2:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/vite-plugin-mock/-/vite-plugin-mock-2.2.3.tgz#b2194ca4346933d9d9f0ec39ea1c4c1ea3c744f2"
-  integrity sha512-xbHo2k2fENJu6Y5eOCxZiZovUgSIRL0efgdhWb9rRjF8k+MHRWbtXgMufRWFtthgZCfz1m3U4uV4TIA4IO/8eQ==
+vite-plugin-mock@^2.2.3:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/vite-plugin-mock/-/vite-plugin-mock-2.2.4.tgz#5bcddf03be600004c0674c5c55325eba9c4adce9"
+  integrity sha512-6rtt9bqK3B0Km89VV4k5OGZ6//7LDJJiP51FIv4ANmP+r05ckvONFK1m6Tx+8WKA3Ff9noXe4vxSf4UP7gqUBg==
   dependencies:
     "@rollup/plugin-node-resolve" "^11.2.0"
     "@types/mockjs" "^1.0.3"
@@ -9187,12 +9187,12 @@ vite-plugin-theme@^0.4.8:
     es-module-lexer "^0.3.26"
     tinycolor2 "^1.4.2"
 
-vite-plugin-windicss@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-windicss/-/vite-plugin-windicss-0.7.1.tgz#1e1c41c2f62d18a2777819057c981a1ec26d8901"
-  integrity sha512-0NNrTBgjx11KOwqS/4szfVIt3LURFor4cEEVVJjB8p7JDTnC4K8Cu11bcAvY+QMOfflxv4s2ONo2SU4xkq68kA==
+vite-plugin-windicss@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-windicss/-/vite-plugin-windicss-0.7.2.tgz#1647ee3765edb0f993b81206f35310a63b25c1f9"
+  integrity sha512-U6N8ljy7meqLkq8aENb3VXKr93Vzp1pU5zwhJr7HmGi+42Wv4i8r7+7BW6WRS4Ght4SAMzFuzIGq9RLPzoZ2Jg==
   dependencies:
-    "@windicss/plugin-utils" "0.7.1"
+    "@windicss/plugin-utils" "0.7.2"
     windicss "^2.3.0"
 
 vite@^2.0.5:
