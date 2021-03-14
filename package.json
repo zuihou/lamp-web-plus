@@ -1,6 +1,11 @@
 {
   "name": "lamp-web-plus",
   "version": "3.1.1",
+  "author": {
+    "name": "zuihou",
+    "email": "306479353@qq.com",
+    "url": "https://github.com/zuihou"
+  },
   "scripts": {
     "bootstrap": "yarn install",
     "serve": "npx --max_old_space_size=4096 vite",
@@ -28,7 +33,7 @@
   },
   "dependencies": {
     "@iconify/iconify": "^2.0.0-rc.6",
-    "@vueuse/core": "^4.3.4",
+    "@vueuse/core": "^4.3.6",
     "@zxcvbn-ts/core": "^0.3.0",
     "ant-design-vue": "2.0.1",
     "apexcharts": "^3.25.0",
@@ -45,7 +50,7 @@
     "vditor": "^3.8.2",
     "vue": "^3.0.7",
     "vue-i18n": "^9.0.0",
-    "vue-router": "^4.0.4",
+    "vue-router": "^4.0.5",
     "vue-types": "^3.0.2",
     "vuex": "^4.0.0",
     "vuex-module-decorators": "^1.0.1",
@@ -92,6 +97,7 @@
     "is-ci": "^3.0.0",
     "less": "^4.1.1",
     "lint-staged": "^10.5.4",
+    "madge": "^4.0.2",
     "postcss": "^8.2.8",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
@@ -107,13 +113,13 @@
     "vite-plugin-compression": "^0.2.3",
     "vite-plugin-html": "^2.0.3",
     "vite-plugin-imagemin": "^0.2.9",
-    "vite-plugin-mock": "^2.2.3",
+    "vite-plugin-mock": "^2.2.4",
     "vite-plugin-purge-icons": "^0.7.0",
     "vite-plugin-pwa": "^0.5.6",
     "vite-plugin-style-import": "^0.8.1",
     "vite-plugin-svg-icons": "^0.3.4",
-    "vite-plugin-theme": "^0.4.8",
-    "vite-plugin-windicss": "0.7.2",
+    "vite-plugin-theme": "^0.5.0",
+    "vite-plugin-windicss": "0.8.2",
     "vue-eslint-parser": "^7.6.0",
     "yargs": "^16.2.0"
   },
@@ -121,7 +127,7 @@
     "//": "Used to install imagemin dependencies, because imagemin may not be installed in China.If it is abroad, you can delete it",
     "bin-wrapper": "npm:bin-wrapper-china",
     "esbuild": "0.8.57",
-    "rollup": "2.41.0"
+    "rollup": "2.41.1"
   },
   "repository": {
     "type": "git",
