@@ -1,3 +1,3 @@
 <template>
-  <div style="padding: 30px"> 敬请期待 </div>
+  <div style="padding: 30px"> 联系作者开通企业版后，获取此项目源码 </div>
 </template>

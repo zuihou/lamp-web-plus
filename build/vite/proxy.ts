@@ -20,13 +20,32 @@ export function createProxy(list: ProxyList = []) {
   for (const [prefix, target] of list) {
     const isHttps = httpsRE.test(target);
 
+    let proxyKey: string;
+    let rewriteBefore: string;
+    let rewriteAfter: string;
+
+    if (Array.isArray(prefix)) {
+      [proxyKey, rewriteBefore, rewriteAfter] = prefix;
+    } else {
+      proxyKey = prefix;
+      rewriteBefore = prefix;
+      rewriteAfter = prefix;
+    }
+    console.log(
+      '代理配置为:以前缀为[%s]开头的接口,将[%s]替换为[%s],并代理到：[%s]',
+      proxyKey,
+      rewriteBefore,
+      rewriteAfter,
+      target
+    );
+
     // https://github.com/http-party/node-http-proxy#options
     ret[prefix] = {
       target: target,
       changeOrigin: true,
       ws: true,
-      rewrite: (path) => {
-        return path.replace(new RegExp(`^${prefix}`), `${prefix}`);
+      rewrite: (path: string) => {
+        return path.replace(new RegExp(`^${rewriteBefore}`), `${rewriteAfter}`);
       },
       // https is require secure=false
       ...(isHttps ? { secure: false } : {}),
