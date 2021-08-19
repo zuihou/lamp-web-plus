@@ -40,7 +40,7 @@ export function createProxy(list: ProxyList = []) {
     );
 
     // https://github.com/http-party/node-http-proxy#options
-    ret[prefix] = {
+    ret[proxyKey] = {
       target: target,
       changeOrigin: true,
       ws: true,
